@@ -638,7 +638,8 @@ function openZone(i) {
   document.getElementById("zd-body").innerHTML = `
     <div><p>${esc(z.gu)} ${esc(z.zone)}은(는) ${esc(z.loc)}의 <b>${esc(z.type)}</b> 구역입니다. 울산시 ${esc(DATA.redev_base)} 기준으로 지금 <b>${k >= 0 ? STAGES[k] : "계획"}</b> 단계${k >= 0 ? `(${esc(z.steps[k])})` : ""}입니다.</p>
       <p style="margin-top:6px">${k >= 0 ? STAGE_MEAN[k] : ""}</p>
-      <a class="zd-lesson" href="#study" data-lesson="${L}">이 단계가 궁금하다면 · 공부방 ${L}강 보기 →</a></div>
+      <a class="zd-lesson" href="#study" data-lesson="${L}">이 단계가 궁금하다면 · 공부방 ${L}강 보기 →</a>
+      ${k >= 1 && k <= 6 ? `<br><a class="zd-lesson" href="#study" data-lesson="11">이 구역 집·땅을 사려면 · 공부방 11강 조합원 자격 보기 →</a>` : ""}</div>
     <div><h4>단계별 날짜</h4><ol class="zd-steps">${steps}</ol></div>
     <div><h4>이 구역의 아파트</h4>${apts ? `<ul class="zd-apts">${apts}</ul>` :
       `<p class="zd-note">아직 이 구역 지번으로 나온 청약 공고가 없습니다. 초기 단계이거나 공고 주소가 도로명으로 되어 있는 경우입니다. 궁금하시면 문의해 주세요.</p>`}</div>
