@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="울산 분양 · 청약 일정 · 입주예정 아파트 · 재개발 재건축 구역 단계를 매일 정리합니다. 울산부동산리더 공인중개사사무소.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="울산부동산리더">
+<meta property="og:title" content="울산부동산리더 — 울산 분양 · 재개발 한눈에">
+<meta property="og:description" content="청약 일정, 입주예정 아파트, 재개발·재건축 구역 단계와 공부방까지. 매일 아침 새로 정리합니다.">
+<meta property="og:url" content="https://nam-yun-ha.github.io/ulsanleader/">
+<meta property="og:image" content="https://nam-yun-ha.github.io/ulsanleader/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='5' fill='%230E5E57'/%3E%3Cg fill='%23fff'%3E%3Crect x='5' y='5' width='5' height='5'/%3E%3Crect x='12.5' y='5' width='5' height='5' opacity='.4'/%3E%3Crect x='20' y='5' width='5' height='5'/%3E%3Crect x='5' y='12.5' width='5' height='5'/%3E%3Crect x='12.5' y='12.5' width='5' height='5'/%3E%3Crect x='20' y='12.5' width='5' height='5' opacity='.4'/%3E%3Crect x='5' y='20' width='5' height='5'/%3E%3Crect x='12.5' y='20' width='5' height='5'/%3E%3Crect x='20' y='20' width='5' height='5'/%3E%3C/g%3E%3C/svg%3E">
 <title>울산부동산리더</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -55,6 +65,13 @@ nav.menu a:hover{color:var(--accent)}
 .social a.kk{color:#191600;background:#FEE500;border-color:#FEE500}
 .kfriend{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-top:22px;text-decoration:none;background:#FEE500;color:#191600;font-weight:700;font-size:16px;padding:12px 18px;border-radius:10px}
 .kfriend span{font-size:13px;font-weight:500;opacity:.8}
+.hero-btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:22px}
+.hero-btns .kfriend{margin-top:0}
+.sharebtn{font:inherit;font-size:15px;font-weight:700;cursor:pointer;border:1px solid #3D6E67;background:transparent;color:#EAF3F1;padding:12px 16px;border-radius:10px}
+.sharebtn:hover{background:#15322F}
+.zd-share{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--accent);border-radius:8px;padding:0 12px;height:36px;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:100}
+.toast.show{opacity:1}
 .kfriend:hover{filter:brightness(.96)}
 .b1.kk{background:#FEE500;color:#191600}
 .call-m{margin-left:6px;background:var(--surface);color:var(--accent);border:1px solid var(--accent)}
@@ -251,7 +268,10 @@ tr.stop td{color:var(--ink-2)}
       <div class="eyebrow">울산 분양 · 입주예정 · 재개발 한눈에</div>
       <h1>울산에서 새로 짓는 아파트,<br><em>한 곳에서</em> 확인하세요.</h1>
       <p class="lead">청약홈 모집공고와 울산시 정비사업 추진현황을 매일 아침 정리합니다. 청약 일정부터 입주예정, 재개발 단계까지 공인중개사가 직접 확인해 올립니다.</p>
-      <a class="kfriend" href="http://pf.kakao.com/_hkMiX/friend" target="_blank" rel="noopener">➕ 카카오톡 채널 친구 추가<span>매일 아침 울산 실거래 받아보기</span></a>
+      <div class="hero-btns">
+        <a class="kfriend" href="http://pf.kakao.com/_hkMiX/friend" target="_blank" rel="noopener">➕ 카카오톡 채널 친구 추가<span>매일 아침 울산 실거래 받아보기</span></a>
+        <button class="sharebtn" type="button" id="share-site">🔗 이 홈페이지 공유하기</button>
+      </div>
       <div class="hero-stats num" id="stats"></div>
     </div>
     <aside class="sched" aria-label="다가오는 청약 일정">
@@ -314,9 +334,11 @@ tr.stop td{color:var(--ink-2)}
 </section>
 
 <dialog class="zdlg" id="zone-dlg" aria-labelledby="zd-title">
-  <div class="zd-head"><h3 id="zd-title"></h3><button class="zd-close" id="zd-close" aria-label="닫기">✕</button></div>
+  <div class="zd-head"><h3 id="zd-title"></h3><button class="zd-share" id="zd-share" type="button">🔗 공유</button><button class="zd-close" id="zd-close" aria-label="닫기">✕</button></div>
   <div class="zd-in" id="zd-body"></div>
 </dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <section class="block alt" id="study" hidden>
   <div class="wrap">
@@ -499,6 +521,7 @@ const LESSON_OF = [1, 4, 3, 4, 5, 6, 9, 9];
 const dlg = document.getElementById("zone-dlg");
 function openZone(i) {
   const z = DATA.zones[i], k = z.k;
+  curZone = i;
   document.getElementById("zd-title").innerHTML =
     `${esc(z.gu)} ${esc(z.zone)} <small>${esc(z.type)} · ${esc(z.loc)} · 면적 ${esc(z.area)}천㎡</small>`;
   const steps = STAGES.map((s, n) =>
@@ -530,6 +553,36 @@ document.getElementById("zones").addEventListener("keydown", e => {
   const c = e.target.closest(".zone"); if (c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openZone(+c.dataset.i); }
 });
 document.getElementById("zd-close").addEventListener("click", () => dlg.close());
+
+/* ── 공유 (2026-09-19) — 휴대폰은 공유 창(카톡·문자), 컴퓨터는 주소 복사 ── */
+const SITE = "https://nam-yun-ha.github.io/ulsanleader/";
+function toast(msg) {
+  const el = document.getElementById("toast"); el.textContent = msg; el.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("show"), 2200);
+}
+async function shareLink(title, text, url) {
+  if (navigator.share) {
+    try { await navigator.share({title, text, url}); return; } catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  try { await navigator.clipboard.writeText(url); toast("주소를 복사했습니다. 카톡 대화창에 붙여 넣으세요."); }
+  catch (e) { prompt("아래 주소를 복사해서 보내세요", url); }
+}
+document.getElementById("share-site").addEventListener("click", () =>
+  shareLink("울산부동산리더 — 울산 분양 · 재개발 한눈에", "청약 일정, 입주예정, 재개발 구역 단계를 한눈에 보세요.", SITE));
+let curZone = null;
+document.getElementById("zd-share").addEventListener("click", () => {
+  if (curZone == null) return;
+  const z = DATA.zones[curZone];
+  shareLink(`${z.gu} ${z.zone} 재개발 — 울산부동산리더`, `${z.gu} ${z.zone}(${z.loc}) 지금 ${z.k >= 0 ? STAGES[z.k] : "계획"} 단계`,
+            SITE + "#zone=" + encodeURIComponent(z.gu + "-" + z.zone));
+});
+/* 공유받은 주소(#zone=남구-B-04)로 들어오면 그 구역 창을 바로 연다 */
+(function () {
+  const m = decodeURIComponent(location.hash || "").match(/^#zone=(.+)$/);
+  if (!m) return;
+  const i = DATA.zones.findIndex(z => (z.gu + "-" + z.zone) === m[1]);
+  if (i >= 0) { document.getElementById("redev").scrollIntoView(); openZone(i); }
+})();
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 document.getElementById("zd-body").addEventListener("click", e => {
   const a = e.target.closest("[data-lesson]"); if (!a) return;
