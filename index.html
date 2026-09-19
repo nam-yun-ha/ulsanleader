@@ -806,6 +806,8 @@ document.getElementById("zd-close").addEventListener("click", () => dlg.close())
 const APPLYHOME = "https://www.applyhome.co.kr/";
 const APT_LINKS = {"2026000403": "bunyang/grandlac-eileen.html", "그랑라크 에일린의 뜰": "bunyang/grandlac-eileen.html"};                    /* 분양 단지 이야기 — {공고번호 or 단지이름: 페이지} (2026-09-20) */
 const aptStory = (...keys) => { for (const k of keys) if (k && APT_LINKS[k]) return APT_LINKS[k]; return ""; };
+const APT_BLOG = {"2026000403": "https://blog.naver.com/lofty6878/224417479688", "그랑라크 에일린의 뜰": "https://blog.naver.com/lofty6878/224417479688"};                      /* 같은 글이 실린 네이버 블로그 (2026-09-20) */
+const aptBlog = (...keys) => { for (const k of keys) if (k && APT_BLOG[k]) return APT_BLOG[k]; return ""; };
 function openApt(i) {
   const d = DATA.bunyang[i];
   curZone = null; curApt = i; curMove = null; curDeal = null; curSmall = null;
@@ -832,6 +834,7 @@ function openApt(i) {
     <dl class="zd-kv">${kv}</dl>
     <div class="zd-home">
       ${aptStory(d.no, d.name) ? `<a class="main" href="${aptStory(d.no, d.name)}">📖 단지 이야기 읽기 →</a>` : ""}
+      ${aptBlog(d.no, d.name) ? `<a class="main" href="${aptBlog(d.no, d.name)}" target="_blank" rel="noopener">📝 블로그에서 보기 →</a>` : ""}
       ${d.url ? `<a class="main" href="${esc(d.url)}" target="_blank" rel="noopener">청약홈 입주자모집공고 보기 →</a>` : ""}
       <a href="${APPLYHOME}" target="_blank" rel="noopener">청약홈에서 청약 신청하기 →</a></div>
     <div><h4>청약 일정</h4><ol class="zd-steps">${steps}</ol>
@@ -1004,6 +1007,7 @@ function openMove(i) {
     ${m.prev.length ? `<p class="zd-note">이전 이름 : ${m.prev.map(esc).join(" · ")} — 같은 자리에 이름을 바꿔 다시 분양했습니다.</p>` : ""}
     <div class="zd-home">
       ${aptStory(m.name) ? `<a class="main" href="${aptStory(m.name)}">📖 단지 이야기 읽기 →</a>` : ""}
+      ${aptBlog(m.name) ? `<a class="main" href="${aptBlog(m.name)}" target="_blank" rel="noopener">📝 블로그에서 보기 →</a>` : ""}
       ${last ? `<a class="main" href="${esc(last.url)}" target="_blank" rel="noopener">청약홈 최근 모집공고 보기 →</a>` : ""}
       <a href="${APPLYHOME}" target="_blank" rel="noopener">청약홈 바로가기 →</a></div>
     ${ns ? `<div><h4>분양 공고 이력 <span class="zd-note">(최근 공고부터)</span></h4><ul class="zd-ns">${ns}</ul>
