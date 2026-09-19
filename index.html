@@ -641,9 +641,9 @@ function renderDaily() {
   };
   const rent = r => `<tr><td class="rk">${r.k}</td><td><b>${esc(r.n)}</b><small>${esc(r.loc)} · ${r.py}평 · ${esc(r.fl)}층 · 계약 ${esc(r.d)}</small></td>
       <td class="r"><b>${won(r.a)}</b><small>${esc(r.t || "")}</small></td></tr>`;
-  const box = (title, sub, rows, fn) => `<div class="dbox"><h3>${title}<small>${sub}</small></h3>${rows.length
-      ? `<table class="num"><tbody>${rows.map((r, k) => fn(Object.assign({k: k + 1}, r))).join("")}</tbody></table>`
-      : `<div class="empty">이날 공개된 거래가 없습니다.</div>`}</div>`;
+  /* 거래가 없는 칸은 아예 보이지 않는다 (2026-09-19 대표님) */
+  const box = (title, sub, rows, fn) => rows.length ? `<div class="dbox"><h3>${title}<small>${sub}</small></h3>
+      <table class="num"><tbody>${rows.map((r, k) => fn(Object.assign({k: k + 1}, r))).join("")}</tbody></table></div>` : "";
   grid.innerHTML =
     box("국민평형 TOP10", "31~35평 · 거래금액 순", x.gm, sale) +
     box("실속형 TOP10", "21~29평 · 거래금액 순", x.ss, sale) +
