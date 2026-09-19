@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="울산 분양 · 청약 일정 · 입주예정 아파트 · 재개발 재건축 구역 단계를 매일 정리합니다. 울산부동산리더 공인중개사사무소.">
+<title>울산부동산리더</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#F3F5F4; --surface:#FFFFFF; --ink:#16211F; --ink-2:#4A5754; --line:#DCE2E0;
+  --accent:#0E5E57; --accent-soft:#E1EFEC; --gold:#C98A12; --gold-soft:#FBF1DC;
+  --live:#C2402F; --live-soft:#FBE7E3; --done:#7B8784; --done-soft:#ECEFEE; --down:#2F6FB5;
+  --hero:#0F2B28; --hero-ink:#EAF3F1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1514; --surface:#161E1D; --ink:#E6ECEA; --ink-2:#9DABA7; --line:#26312F;
+    --accent:#4FB3A6; --accent-soft:#16312E; --gold:#E3AE4A; --gold-soft:#2D2412;
+    --live:#EE7A68; --live-soft:#3A1E19; --done:#8B9794; --done-soft:#1E2725; --down:#7FAEE6;
+    --hero:#0A1F1D; --hero-ink:#EAF3F1;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1514; --surface:#161E1D; --ink:#E6ECEA; --ink-2:#9DABA7; --line:#26312F;
+  --accent:#4FB3A6; --accent-soft:#16312E; --gold:#E3AE4A; --gold-soft:#2D2412;
+  --live:#EE7A68; --live-soft:#3A1E19; --done:#8B9794; --done-soft:#1E2725; --down:#7FAEE6;
+  --hero:#0A1F1D; --hero-ink:#EAF3F1;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;font-size:15px;line-height:1.65;word-break:keep-all}
+h1,h2,h3{font-family:"IBM Plex Sans KR","Noto Sans KR",system-ui,sans-serif;text-wrap:balance;margin:0;line-height:1.3}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+.num{font-variant-numeric:tabular-nums}
+.sample{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--gold);background:var(--gold-soft);padding:1px 7px;border-radius:3px;vertical-align:middle}
+.asof{font-size:12px;color:var(--ink-2)}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:30px;height:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:4px;background:var(--accent);border-radius:4px}
+.logo-mark i{background:var(--surface);opacity:.9}
+.logo-mark i:nth-child(2),.logo-mark i:nth-child(6){opacity:.35}
+.logo b{font-family:"IBM Plex Sans KR",sans-serif;font-size:18px;font-weight:700}
+.logo small{display:block;font-size:11px;color:var(--ink-2);letter-spacing:.08em;margin-top:-3px}
+nav.menu{display:flex;gap:22px;margin-left:auto;font-weight:500}
+nav.menu a{text-decoration:none;color:var(--ink-2)}
+nav.menu a:hover{color:var(--accent)}
+.call{margin-left:8px;text-decoration:none;background:var(--accent);color:#fff;font-weight:700;padding:8px 14px;border-radius:6px;white-space:nowrap}
+@media (max-width:760px){nav.menu{display:none}.call{margin-left:auto}}
+
+.hero{background:var(--hero);color:var(--hero-ink)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding-block:56px}
+.eyebrow{font-size:13px;letter-spacing:.12em;color:#8FD1C7;font-weight:700}
+.hero h1{font-size:clamp(28px,4.4vw,44px);font-weight:700;margin-top:12px}
+.hero h1 em{font-style:normal;color:#F2C35B}
+.hero p.lead{color:#B9CFCB;max-width:36em;margin:16px 0 0}
+.hero-stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px}
+.hero-stats div{border-left:2px solid #2E5A54;padding-left:12px}
+.hero-stats b{display:block;font-family:"IBM Plex Sans KR",sans-serif;font-size:26px}
+.hero-stats span{font-size:13px;color:#9DBAB5}
+.sched{background:#15322F;border:1px solid #24504A;border-radius:10px;padding:20px;align-self:start}
+.sched h3{font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sched h3 span{font-size:12px;color:#9DBAB5;font-weight:500}
+.sched ol{list-style:none;margin:14px 0 0;padding:0}
+.sched li{display:grid;grid-template-columns:62px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid #24504A}
+.sched .d{font-family:"IBM Plex Sans KR",sans-serif;font-weight:700;font-size:15px}
+.sched .d small{display:block;font-size:11px;color:#9DBAB5;font-weight:500}
+.sched .n{font-size:14px}
+.sched .n small{display:block;color:#9DBAB5;font-size:12px}
+.sched .empty{color:#9DBAB5;font-size:14px;padding-top:12px}
+.step{font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;background:#24504A;color:#CFE8E3;white-space:nowrap}
+.step.hot{background:#F2C35B;color:#2A2008}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-block:40px}}
+
+section.block{padding-block:56px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:24px}
+.head h2{font-size:26px}
+.head p{margin:4px 0 0;color:var(--ink-2)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:6px 14px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.filters button:focus-visible,.call:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.card .plan{height:110px;background:var(--accent-soft);position:relative;overflow:hidden}
+.card .plan svg{position:absolute;inset:0;width:100%;height:100%}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.status{font-size:12px;font-weight:700;padding:3px 9px;border-radius:3px}
+.s-live{background:var(--live-soft);color:var(--live)}
+.s-soon{background:var(--gold-soft);color:var(--gold)}
+.s-done{background:var(--done-soft);color:var(--done)}
+.kind{font-size:12px;padding:3px 9px;border-radius:3px;border:1px solid var(--line);color:var(--ink-2)}
+.card h3{font-size:18px}
+.card .loc{color:var(--ink-2);font-size:13px;margin-top:-6px}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:4px 0 0;padding-top:12px;border-top:1px dashed var(--line)}
+.specs dt{font-size:12px;color:var(--ink-2)}
+.specs dd{margin:0;font-weight:700;font-size:15px}
+.card .more{margin-top:auto;padding-top:6px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+
+.alt{background:var(--surface);border-block:1px solid var(--line)}
+
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:680px}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;color:var(--ink-2);font-weight:500;background:var(--ground)}
+td small{color:var(--ink-2);margin-left:4px}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+.up{color:var(--live);font-weight:700}
+.down{color:var(--down);font-weight:700}
+.flat{color:var(--ink-2)}
+.new{font-size:11px;font-weight:700;color:var(--live);margin-left:6px}
+.note{font-size:12px;color:var(--ink-2);margin-top:10px}
+
+.cta{background:var(--hero);color:var(--hero-ink);border-radius:12px;padding:36px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.cta h2{font-size:24px}
+.cta p{margin:8px 0 0;color:#B9CFCB}
+.cta .btns{display:flex;flex-wrap:wrap;gap:10px}
+.cta a{text-decoration:none;font-weight:700;padding:12px 20px;border-radius:8px}
+.b1{background:#F2C35B;color:#2A2008}
+.b2{border:1px solid #3D6E67;color:#EAF3F1}
+@media (max-width:700px){.cta{grid-template-columns:1fr;padding:26px}}
+
+footer{padding-block:32px 48px;color:var(--ink-2);font-size:13px}
+footer .wrap{display:grid;gap:10px}
+footer dl{display:flex;flex-wrap:wrap;gap:4px 20px;margin:0}
+footer dt{display:inline;font-weight:700;color:var(--ink)}
+footer dd{display:inline;margin:0 0 0 6px}
+
+.gu-filter{margin-bottom:0}
+.tag-live{font-size:11px;font-weight:700;color:var(--live);background:var(--live-soft);padding:2px 7px;border-radius:3px;margin-left:6px}
+.tag-dim{font-size:12px;color:var(--ink-2)}
+.ym{font-weight:700;font-family:"IBM Plex Sans KR",sans-serif}
+tr.yr td{border-top:2px solid var(--ink-2)}
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.zgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.zgrid{grid-template-columns:1fr}}
+.zone{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.zone.fin{opacity:.72}
+.zone h3{font-size:17px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.zone h3 small{font-size:12px;color:var(--ink-2);font-weight:500}
+.zone .loc{color:var(--ink-2);font-size:13px}
+.ztype{font-size:12px;font-weight:700;padding:2px 8px;border-radius:3px;background:var(--accent-soft);color:var(--accent)}
+.ztype.t-재건축{background:var(--gold-soft);color:var(--gold)}
+.ztype.t-주거환경개선{background:var(--done-soft);color:var(--done)}
+.zbar{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;margin-top:4px}
+.zbar i{height:7px;border-radius:2px;background:var(--line)}
+.zbar i.on{background:var(--accent)}
+.zbar i.now{background:var(--gold)}
+.now-step{font-size:14px;font-weight:700}
+.now-step span{font-weight:500;color:var(--ink-2);margin-left:6px}
+.legend-steps{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--ink-2);margin:0 0 16px}
+.legend-steps b{color:var(--ink);font-weight:500}
+h3.sub{font-size:19px;margin:40px 0 6px}
+tr.stop td{color:var(--ink-2)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "RealEstateAgent", "name": "울산부동산리더공인중개사사무소", "telephone": "+82-52-254-4988", "address": {"@type": "PostalAddress", "streetAddress": "수암로155번길 22-7, 103호", "addressLocality": "남구", "addressRegion": "울산광역시", "addressCountry": "KR"}, "sameAs": ["https://blog.naver.com/lofty6878", "http://pf.kakao.com/_hkMiX"]}</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">
+      <span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span><b>울산부동산리더</b><small>ULSAN 분양 · 재개발</small></span>
+    </a>
+    <nav class="menu" aria-label="주요 메뉴">
+      <a href="#bunyang">분양</a>
+      <a href="#movein">입주예정</a>
+      <a href="#redev">재개발</a>
+      <a href="#trade">실거래</a>
+      <a href="#contact">문의</a>
+    </nav>
+    <a class="call" href="tel:0522544988">📞 052-254-4988</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">울산 분양 · 입주예정 · 재개발 한눈에</div>
+      <h1>울산에서 새로 짓는 아파트,<br><em>한 곳에서</em> 확인하세요.</h1>
+      <p class="lead">청약홈 모집공고와 울산시 정비사업 추진현황을 매일 아침 정리합니다. 청약 일정부터 입주예정, 재개발 단계까지 공인중개사가 직접 확인해 올립니다.</p>
+      <div class="hero-stats num" id="stats"></div>
+    </div>
+    <aside class="sched" aria-label="다가오는 청약 일정">
+      <h3>다가오는 청약 일정 <span id="sched-range"></span></h3>
+      <ol class="num" id="sched"></ol>
+    </aside>
+  </div>
+</section>
+
+<section class="block" id="bunyang">
+  <div class="wrap">
+    <div class="head">
+      <div><h2>울산 분양소식</h2><p>청약홈 모집공고 기준 · 평당가는 주택형별 최고 분양가의 공급면적 가중 평균입니다.</p></div>
+      <div class="filters" role="group" aria-label="분양 상태 필터">
+        <button data-f="all" aria-pressed="true">전체</button>
+        <button data-f="live" aria-pressed="false">청약중</button>
+        <button data-f="soon" aria-pressed="false">청약예정</button>
+        <button data-f="done" aria-pressed="false">분양완료</button>
+      </div>
+    </div>
+    <div class="grid" id="cards"></div>
+  </div>
+</section>
+
+<section class="block alt" id="movein">
+  <div class="wrap">
+    <div class="head">
+      <div><h2>울산 입주예정 아파트</h2><p>입주 순서대로 · 세대수는 청약홈 <b>일반분양</b> 기준입니다(조합원 몫 제외).</p></div>
+      <div class="filters gu-filter" role="group" aria-label="입주예정 구 필터" data-for="movein"></div>
+    </div>
+    <div class="tablebox">
+      <table class="num">
+        <thead><tr><th>입주예정</th><th>단지</th><th>위치</th><th class="r">일반분양</th><th>평형</th><th>분양가</th><th>시공</th><th>상태</th></tr></thead>
+        <tbody id="movein-rows"></tbody>
+      </table>
+    </div>
+    <p class="note">출처: 한국부동산원 청약홈 입주자모집공고 · 입주예정월은 공고 기준이라 실제 입주와 다를 수 있습니다 · <span class="asof"></span></p>
+  </div>
+</section>
+
+<section class="block" id="redev">
+  <div class="wrap">
+    <div class="head">
+      <div><h2>울산 재개발 · 재건축</h2><p>울산시 도시정비사업 추진현황 <span id="redev-base"></span> 기준 · 구역마다 지금 어느 단계인지 보여 드립니다.</p></div>
+      <div class="filters gu-filter" role="group" aria-label="재개발 구 필터" data-for="redev"></div>
+    </div>
+    <p class="legend-steps" id="legend-steps"></p>
+    <div class="zgrid" id="zones"></div>
+    <p class="note">출처: 울산광역시 도시정비(재개발·재건축) 게시판 「도시정비사업 추진현황」 · 단계는 엑셀의 인가·고시 날짜 칸 기준입니다(비고 칸과 다른 구역이 있어 날짜를 따랐습니다) · 구역 번호는 울산시 정비기본계획 번호입니다.</p>
+
+    <h3 class="sub">가로주택 · 소규모재건축</h3>
+    <p class="note" style="margin-top:0">울산시 소규모주택정비사업 추진현황 <span id="small-base"></span> 기준 · 중단·보류된 곳은 맨 아래 회색으로 둡니다.</p>
+    <div class="tablebox">
+      <table class="num">
+        <thead><tr><th>구</th><th>사업</th><th>유형</th><th>위치</th><th>추진단계</th><th class="r">조합원</th><th class="r">기존 세대</th><th class="r">공급 세대</th></tr></thead>
+        <tbody id="small-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="trade">
+  <div class="wrap">
+    <div class="head"><div><h2>울산 실거래 동향</h2><p>최근 7일 계약된 아파트 매매 중 거래가 상위 단지 · 같은 단지·같은 면적의 직전 거래와 비교합니다.</p></div></div>
+    <div class="tablebox">
+      <table class="num">
+        <thead><tr><th>단지명</th><th>위치</th><th>전용면적</th><th>층</th><th class="r">거래가</th><th class="r">직전 거래 대비</th><th>계약일</th></tr></thead>
+        <tbody id="deals"></tbody>
+      </table>
+    </div>
+    <p class="note">단위: 만원 · 출처: 국토교통부 아파트 매매 실거래가, 해제 거래 제외 · <span class="asof"></span></p>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2>분양·재개발, 궁금한 단지를 물어보세요</h2>
+        <p>청약 일정, 입주 시기, 재개발 구역의 진행 상황까지 확인해 드립니다. 상담은 무료입니다.</p>
+      </div>
+      <div class="btns">
+        <a class="b1" href="tel:0522544988">📞 052-254-4988</a>
+        <a class="b2" href="http://pf.kakao.com/_hkMiX/chat" target="_blank" rel="noopener">카카오톡 채널 채팅</a>
+        <a class="b2" href="https://blog.naver.com/lofty6878" target="_blank" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <dl>
+      <div><dt>상호</dt><dd>울산부동산리더공인중개사사무소</dd></div>
+      <div><dt>대표자</dt><dd>남윤하</dd></div>
+      <div><dt>중개사무소 등록번호</dt><dd>31140-2023-00101</dd></div>
+      <div><dt>주소</dt><dd>울산광역시 남구 수암로155번길 22-7, 103호</dd></div>
+      <div><dt>연락처</dt><dd><a href="tel:0522544988">052-254-4988</a></dd></div>
+    </dl>
+    <div>분양·재개발·시세 정보는 공공데이터를 가공한 참고 자료입니다. 청약 자격과 세부 조건은 입주자모집공고를, 정비사업 일정은 해당 구·군청과 조합 공고를 반드시 확인하세요. <span class="asof"></span></div>
+  </div>
+</footer>
+
+<script>
+const DATA = {"asof": "2026.09.19 (실거래 2026.09.18 계약분까지)", "sched_range": "9.19 – 10.3", "sched": [{"date": "2026-09-21", "name": "문수로 비스타 더파크", "what": "특별공급", "tag": "접수", "hot": true}, {"date": "2026-09-22", "name": "문수로 비스타 더파크", "what": "1순위 해당지역", "tag": "접수", "hot": true}, {"date": "2026-09-22", "name": "남울산 노르웨이숲(조합원 취소분)(2회차)", "what": "당첨자 발표", "tag": "발표", "hot": false}, {"date": "2026-09-22", "name": "그랑라크 에일린의 뜰", "what": "당첨자 발표", "tag": "발표", "hot": false}, {"date": "2026-09-23", "name": "문수로 비스타 더파크", "what": "2순위", "tag": "접수", "hot": false}, {"date": "2026-09-28", "name": "더샵 시에르네(조합원취소분)(2회차)", "what": "특별공급", "tag": "접수", "hot": true}], "bunyang": [{"s": "live", "name": "남울산 노르웨이숲(조합원 취소분)(2회차)", "loc": "울주군 온양읍", "builder": "유림E&C", "kind": "민영", "total": 52, "ppy": 1382, "areas": "59·74·84㎡", "move": "2026.10", "pblanc": "2026.09.04", "win": "09.22"}, {"s": "live", "name": "그랑라크 에일린의 뜰", "loc": "남구 야음동", "builder": "아이에스동서(주)", "kind": "민영", "total": 1153, "ppy": 2224, "areas": "59·74·84·102㎡", "move": "2029.11", "pblanc": "2026.09.02", "win": "09.22"}, {"s": "soon", "name": "더샵 시에르네(조합원취소분)(2회차)", "loc": "중구 학성동", "builder": "㈜포스코이앤씨", "kind": "민영", "total": 29, "ppy": 2228, "areas": "74·75·84㎡", "move": "2027.05", "pblanc": "2026.09.18", "win": "10.07"}, {"s": "soon", "name": "태화강 에피트", "loc": "울주군 범서읍", "builder": "에이치엘디앤아이한라 주식회사", "kind": "무순위·잔여", "total": 1, "ppy": 1657, "areas": "84㎡", "move": "2027.07", "pblanc": "2026.09.15", "win": "10.06"}, {"s": "soon", "name": "문수로 비스타 더파크", "loc": "남구 무거동", "builder": "(주)동원개발", "kind": "민영", "total": 700, "ppy": 2364, "areas": "68·84㎡", "move": "2029.05", "pblanc": "2026.09.11", "win": "10.01"}, {"s": "done", "name": "문수데시앙2단지 공가세대 일반공급", "loc": "울주군 청량읍", "builder": "(주)태영건설", "kind": "국민", "total": 22, "ppy": 830, "areas": "59·74㎡", "move": "2026.10", "pblanc": "2026.08.28", "win": "09.14"}, {"s": "done", "name": "센텀 엘카사", "loc": "울주군 온양읍", "builder": "(주)시아이디건설", "kind": "민영", "total": 74, "ppy": 1208, "areas": "69·73·74·76㎡", "move": "2026.08", "pblanc": "2026.07.03", "win": "07.22"}, {"s": "done", "name": "문수로 라티에르 673", "loc": "남구 신정동", "builder": "(주)한국토지신탁", "kind": "무순위·잔여", "total": 12, "ppy": null, "areas": "84㎡", "move": "2029.08", "pblanc": "2026.05.21", "win": "05.29"}, {"s": "done", "name": "더샵 시에르네(조합원 취소분)", "loc": "중구 학성동", "builder": "(주)포스코이앤씨", "kind": "민영", "total": 36, "ppy": 2247, "areas": "74·75·84㎡", "move": "2027.05", "pblanc": "2026.04.28", "win": "05.19"}], "deals": [{"gu": "남구", "dong": "신정동", "danji": "대공원월드메르디앙", "area": 153.9, "py": 59, "floor": 10, "ymd": "09.16", "amount": 150000, "prev": 168000, "high": false}, {"gu": "남구", "dong": "옥동", "danji": "대공원롯데인벤스가3단지", "area": 149.9, "py": 58, "floor": 5, "ymd": "09.12", "amount": 117500, "prev": 111500, "high": true}, {"gu": "남구", "dong": "야음동", "danji": "대현더샵", "area": 84.9, "py": 33, "floor": 12, "ymd": "09.12", "amount": 86900, "prev": 86000, "high": false}, {"gu": "남구", "dong": "무거동", "danji": "무거위브자이", "area": 120.0, "py": 46, "floor": 3, "ymd": "09.12", "amount": 85000, "prev": 75500, "high": false}, {"gu": "남구", "dong": "야음동", "danji": "대현더샵", "area": 84.9, "py": 33, "floor": 5, "ymd": "09.17", "amount": 85000, "prev": 86900, "high": false}, {"gu": "남구", "dong": "야음동", "danji": "대현더샵", "area": 84.8, "py": 33, "floor": 17, "ymd": "09.12", "amount": 83000, "prev": 86000, "high": false}, {"gu": "남구", "dong": "신정동", "danji": "대명루첸", "area": 83.3, "py": 32, "floor": 9, "ymd": "09.17", "amount": 77000, "prev": 78800, "high": false}, {"gu": "울주군", "dong": "범서읍 굴화리", "danji": "문수산동원로얄듀크", "area": 100.0, "py": 38, "floor": 17, "ymd": "09.15", "amount": 75500, "prev": 72000, "high": false}, {"gu": "남구", "dong": "야음동", "danji": "울산대현시티프라디움", "area": 84.4, "py": 32, "floor": 7, "ymd": "09.15", "amount": 72300, "prev": 73000, "high": false}, {"gu": "중구", "dong": "복산동", "danji": "번영로센트리지4단지", "area": 59.9, "py": 23, "floor": 7, "ymd": "09.13", "amount": 64000, "prev": 65700, "high": false}], "movein": [{"ym": "2026.10", "name": "e편한세상 신정 스카이하임", "gu": "남구", "dong": "신정동", "tot": 158, "py": "34~35평", "price": "8.8억", "builder": "DL이앤씨", "st": "청약 접수 끝", "live": false}, {"ym": "2026.10", "name": "남울산 노르웨이숲", "gu": "울주군", "dong": "온양읍", "tot": 332, "py": "25~34평", "price": "3.4억~4.9억", "builder": "유림E&C", "st": "청약 중", "live": true}, {"ym": "2026.10", "name": "문수데시앙2단지 공가세대 일반공급", "gu": "울주군", "dong": "청량읍", "tot": 27, "py": "27~33평", "price": "2.2억~2.8억", "builder": "태영건설", "st": "청약 중", "live": true}, {"ym": "2026.11", "name": "e편한세상 번영로 리더스포레", "gu": "남구", "dong": "야음동", "tot": 192, "py": "35평", "price": "8.3억~8.5억", "builder": "DL이앤씨", "st": "청약 접수 끝", "live": false}, {"ym": "2026.11", "name": "울산 다운2지구 우미린 더 시그니처", "gu": "울주군", "dong": "범서읍", "tot": 1109, "py": "34평", "price": "4.4억", "builder": "우미건설 외", "st": "청약 접수 끝", "live": false}, {"ym": "2027.01", "name": "울산 우정 에피트", "gu": "중구", "dong": "우정동", "tot": 198, "py": "24~34평", "price": "4.9억~6.8억", "builder": "HL디앤아이한라", "st": "청약 접수 끝", "live": false}, {"ym": "2027.02", "name": "더폴 울산신정", "gu": "남구", "dong": "신정동", "tot": 168, "py": "36평", "price": "7.1억~7.2억", "builder": "우성종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2027.05", "name": "더샵 시에르네", "gu": "중구", "dong": "학성동", "tot": 231, "py": "31~47평", "price": "6.9억~10.3억", "builder": "포스코이앤씨", "st": "청약 중", "live": true}, {"ym": "2027.07", "name": "울산 다운2지구 우미 린 어반파크", "gu": "중구", "dong": "다운동", "tot": 731, "py": "34평", "price": "4.7억", "builder": "우미건설", "st": "청약 접수 끝", "live": false}, {"ym": "2027.07", "name": "태화강 에피트", "gu": "울주군", "dong": "범서읍", "tot": 307, "py": "33~42평", "price": "5.7억~7.1억", "builder": "HL디앤아이한라", "st": "청약 중", "live": true}, {"ym": "2027.11", "name": "번영로 하늘채 라크뷰", "gu": "남구", "dong": "야음동", "tot": 803, "py": "24~52평", "price": "5.3억~11.4억", "builder": "코오롱글로벌", "st": "청약 접수 끝", "live": false}, {"ym": "2027.11", "name": "울산 진하 한양립스 그랑블루", "gu": "울주군", "dong": "서생면", "tot": 212, "py": "29~33평", "price": "3.8억~5억", "builder": "한양건설", "st": "청약 접수 끝", "live": false}, {"ym": "2027.11", "name": "울산태화강변지구 A-2블록 공공분양주택", "gu": "울주군", "dong": "범서읍", "tot": 277, "py": "25~26평", "price": "4.3억", "builder": "서해종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.02", "name": "라엘에스", "gu": "남구", "dong": "신정동", "tot": 1073, "py": "18~34평", "price": "4.4억~8.9억", "builder": "롯데건설 외", "st": "청약 접수 끝", "live": false}, {"ym": "2028.02", "name": "힐스테이트 선암호수공원 1단지", "gu": "남구", "dong": "야음동", "tot": 438, "py": "34~72평", "price": "9.3억~24.8억", "builder": "현대건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.02", "name": "힐스테이트 선암호수공원 2단지", "gu": "남구", "dong": "야음동", "tot": 193, "py": "35~70평", "price": "9.3억~24억", "builder": "현대건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.03", "name": "문수로 센트레빌 에듀리체", "gu": "남구", "dong": "신정동", "tot": 368, "py": "34~35평", "price": "7.2억~7.9억", "builder": "동부건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.05", "name": "울산 호수공원 에일린의 뜰 1단지", "gu": "남구", "dong": "야음동", "tot": 310, "py": "34~41평", "price": "6.9억~8.4억", "builder": "아이에스동서", "st": "청약 접수 끝", "live": false}, {"ym": "2028.05", "name": "울산다운2지구 A-10블록 공공분양주택", "gu": "울주군", "dong": "범서읍", "tot": 579, "py": "25~27평", "price": "3.5억~3.8억", "builder": "LH부산울산지역본부", "st": "청약 접수 끝", "live": false}, {"ym": "2028.06", "name": "힐스테이트 문수로 센트럴", "gu": "남구", "dong": "신정동", "tot": 566, "py": "35평", "price": "9억~9.2억", "builder": "현대엔지니어링", "st": "청약 접수 끝", "live": false}, {"ym": "2028.08", "name": "태화강 센트럴 아이파크", "gu": "중구", "dong": "반구동", "tot": 704, "py": "34평", "price": "8.1억~8.2억", "builder": "HDC현대산업개발", "st": "청약 접수 끝", "live": false}, {"ym": "2028.09", "name": "울산 다운2지구 유승한내들 에듀포레", "gu": "울주군", "dong": "범서읍", "tot": 507, "py": "33평", "price": "5.1억", "builder": "유승종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.09", "name": "울산 호수공원 에일린의 뜰 2단지", "gu": "남구", "dong": "야음동", "tot": 210, "py": "25~35평", "price": "5.2억~7억", "builder": "아이에스동서", "st": "청약 접수 끝", "live": false}, {"ym": "2028.11", "name": "번영로 롯데캐슬 센트럴스카이", "gu": "중구", "dong": "학산동", "tot": 634, "py": "36~44평", "price": "7.2억~9억", "builder": "롯데건설", "st": "청약 접수 끝", "live": false}, {"ym": "2028.11", "name": "한화포레나 울산무거", "gu": "남구", "dong": "무거동", "tot": 816, "py": "33~66평", "price": "7.6억~17.6억", "builder": "한화건설", "st": "청약 접수 끝", "live": false}, {"ym": "2029.01", "name": "문수로 코아루 에듀스카이", "gu": "남구", "dong": "신정동", "tot": 123, "py": "35평", "price": "8.2억~8.4억", "builder": "금강종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2029.01", "name": "울산역 폴리시아 아이유쉘", "gu": "울주군", "dong": "삼남읍", "tot": 357, "py": "35~48평", "price": "4.3억~5.7억", "builder": "우방", "st": "청약 접수 끝", "live": false}, {"ym": "2029.04", "name": "울산신복역 비스타 메트로", "gu": "남구", "dong": "무거동", "tot": 481, "py": "35~36평", "price": "7.6억~8억", "builder": "동원개발", "st": "청약 접수 끝", "live": false}, {"ym": "2029.05", "name": "문수로 비스타 더파크", "gu": "남구", "dong": "무거동", "tot": 700, "py": "28~34평", "price": "6.2억~8.3억", "builder": "동원개발", "st": "청약 중", "live": true}, {"ym": "2029.08", "name": "더폴 우정", "gu": "중구", "dong": "우정동", "tot": 316, "py": "33~34평", "price": "6.1억~6.6억", "builder": "우성종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2029.08", "name": "문수로 라티에르 673", "gu": "남구", "dong": "신정동", "tot": 199, "py": "35~43평", "price": "9.1억~11.8억", "builder": "금강종합건설", "st": "청약 접수 끝", "live": false}, {"ym": "2029.11", "name": "그랑라크 에일린의 뜰", "gu": "남구", "dong": "야음동", "tot": 1153, "py": "25~40평", "price": "5.7억~8.7억", "builder": "아이에스동서", "st": "청약 중", "live": true}], "zones": [{"gu": "남구", "zone": "B-08", "type": "재개발", "loc": "신정4동 901-3 일원", "area": 110.8, "k": 6, "steps": ["", "2006.07.26", "2008.04.03", "2009.09.11", "2017.06.30", "2020.02.27", "2023.12.27", ""], "note": "착공"}, {"gu": "남구", "zone": "C-02", "type": "재건축", "loc": "무거1동 1184-1 일원", "area": 32.9, "k": 6, "steps": ["", "2003.12.04", "2007.04.26", "2007.05.29", "2007.11.02", "2020.07.21", "2021.07.02", ""], "note": "공사중(건물준공)"}, {"gu": "동구", "zone": "A-01", "type": "주거환경개선", "loc": "일산동 155번지 일원", "area": 63.6, "k": 6, "steps": ["", "", "2009.12.31", "", "2012.02.16", "", "2012.06.18", ""], "note": "사업완료 고시 추진중"}, {"gu": "중구", "zone": "B-04", "type": "재개발", "loc": "교동 190-4번지 일원", "area": 329.9, "k": 5, "steps": ["", "2007.01.19", "2007.08.23", "2011.05.27", "2018.11.26", "2024.12.09", "", ""], "note": "관리처분인가"}, {"gu": "남구", "zone": "B-14", "type": "재개발", "loc": "야음동 350-5번지 일원", "area": 90.8, "k": 5, "steps": ["", "2006.07.27", "2008.05.15", "2015.12.08", "2019.06.28", "2021.01.22", "", ""], "note": "관리처분인가"}, {"gu": "중구", "zone": "우정1", "type": "재개발", "loc": "우정동 407번지 일원", "area": 95.6, "k": 3, "steps": ["", "2024.12.30", "2024.03.14", "2025.09.15", "", "", "", ""], "note": "정비구역지정"}, {"gu": "남구", "zone": "B-04", "type": "재개발", "loc": "신정동 1586 일원", "area": 78.8, "k": 3, "steps": ["", "2023.11.14", "2023.09.07", "2025.02.20", "", "", "", ""], "note": "정비구역지정"}, {"gu": "남구", "zone": "B-07", "type": "재개발", "loc": "신정4동 880-9일원", "area": 81.9, "k": 3, "steps": ["", "2006.07.27", "2008.01.24", "2021.03.16", "", "", "", ""], "note": "조합설립인가"}, {"gu": "중구", "zone": "유곡", "type": "재개발", "loc": "유곡동 114번지 일원", "area": 66.9, "k": 2, "steps": ["", "", "2025.11.24", "", "", "", "", ""], "note": "정비구역지정"}, {"gu": "남구", "zone": "A-01", "type": "주거환경개선", "loc": "상개동 154-1번지 일원", "area": 14.1, "k": 2, "steps": ["", "", "2019.09.19", "", "", "", "", ""], "note": "정비구역지정"}, {"gu": "남구", "zone": "B-01", "type": "재개발", "loc": "신정동 1441-6일원", "area": 93, "k": 2, "steps": ["", "2006.07.27", "2025.09.25", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "남구", "zone": "C-03", "type": "재건축", "loc": "신정2동 1622-1 일원", "area": 110.8, "k": 2, "steps": ["", "2007.01.04", "2015.08.27", "", "", "", "", ""], "note": "정비구역지정"}, {"gu": "북구", "zone": "A-02", "type": "주거환경개선", "loc": "염포동 521-1 일원", "area": 75.5, "k": 2, "steps": ["", "", "2019.09.19", "", "", "", "", ""], "note": "정비구역지정"}, {"gu": "울주군", "zone": "A-11", "type": "주거환경개선", "loc": "청량읍 상남리 727-1번지 일원", "area": 43.1, "k": 2, "steps": ["", "", "2019.09.19", "", "", "", "", ""], "note": "정비구역지정"}, {"gu": "중구", "zone": "B-10", "type": "재개발", "loc": "학성동 39번지 일원", "area": 59.3, "k": 1, "steps": ["", "2007.07.04", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "중구", "zone": "B-11", "type": "재개발", "loc": "남외동 52-4번지 일원", "area": 71.7, "k": 1, "steps": ["", "2008.11.26", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "남구", "zone": "B-02", "type": "재개발", "loc": "신정동 1316-33 일원", "area": 45.8, "k": 1, "steps": ["", "2006.07.27", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "남구", "zone": "B-16", "type": "재개발", "loc": "신정동 135-9 일원", "area": 85.1, "k": 1, "steps": ["", "2008.08.22", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "동구", "zone": "C-04", "type": "재건축", "loc": "전하동 301-5 일원", "area": 36.9, "k": 1, "steps": ["", "2025.11.03", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "동구", "zone": "D-01", "type": "재개발", "loc": "방어동 314-2 일원", "area": 61.5, "k": 1, "steps": ["", "2009.12.29", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "북구", "zone": "B-02", "type": "재개발", "loc": "양정동 484-56 일원", "area": 60.4, "k": 1, "steps": ["", "2007.02.01", "", "", "", "", "", ""], "note": "추진위승인"}, {"gu": "중구", "zone": "A-04", "type": "주거환경개선", "loc": "동동 421번지 일원", "area": 53, "k": 7, "steps": ["", "", "2010.04.22", "2012.02.06", "2012.02.06", "2012.06.26", "2012.06.26", "2023.10.10"], "note": "공사완료"}, {"gu": "중구", "zone": "B-05", "type": "재개발", "loc": "복산동 460-72번지 일원", "area": 204.1, "k": 7, "steps": ["", "2006.09.27", "2007.08.23", "2011.11.10", "2015.12.31", "2017.02.27", "2020.08.06", "2023.09.25"], "note": "부분준공(공동주택)"}], "small": [{"kind": "가로주택", "gu": "중구", "loc": "약사동 625-16번지 일원", "name": "대하아파트", "mem": 45, "old": 46, "new": 105, "stage": "조합설립인가", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "반구동 581-2번지 일원", "name": "반구동 581-2번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "우정동 284-8번지 일원", "name": "우정동 284-8번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "우정동 285-1번지 일원", "name": "우정동 285-1번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "유곡동 129-1번지 일원", "name": "유곡동 129-1번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "태화동 24-2번지 일원", "name": "태화동 24-2번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학산동 113번지 일원", "name": "학산동 113번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학산동 4-6번지 일원", "name": "학산동 4-6번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학산동 5-25번지 일원", "name": "학산동 5-25번지 일원", "mem": 48, "old": 61, "new": 130, "stage": "조합설립인가", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학산동 6-1번지 일원", "name": "학산동 6지구", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학산동 7번지 일원", "name": "학산동 7번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학성동 429-2번지 일원", "name": "학성동 429-2번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "학성동 469-1번지 일원", "name": "학성동 469-1번지 일원", "mem": 96, "old": 119, "new": 241, "stage": "사업시행자지정", "stop": false}, {"kind": "소규모재건축", "gu": "중구", "loc": "태화동 123-7", "name": "새운아파트", "mem": 171, "old": 186, "new": 261, "stage": "조합설립동의서 검인", "stop": false}, {"kind": "소규모재건축", "gu": "중구", "loc": "학성동 202-6", "name": "케이티아파트", "mem": 30, "old": 30, "new": 38, "stage": "조합설립동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1101-3번지 외 20필지", "name": "대공원", "mem": null, "old": 35, "new": 71, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "야음동 593번지 외 16필지", "name": "덕남,대성", "mem": null, "old": 137, "new": 92, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1182-27번지  외 5필지", "name": "문수로", "mem": null, "old": 105, "new": 144, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 734-3번지 외 8필지", "name": "소정마을 가로정비주택사업 추진위원회", "mem": null, "old": 38, "new": 292, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1821-2번지 외 9필지", "name": "신정동 1821-2번지 일원", "mem": null, "old": 80, "new": 104, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1822-2번지 외 21필지", "name": "신정동 1822-2번지 일원", "mem": null, "old": 119, "new": 185, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1824-3번지 외 15필지", "name": "신정동 1824-3번지 일원", "mem": null, "old": 106, "new": 158, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 516-1번지 외 15필지", "name": "신정동 516 일원", "mem": null, "old": 20, "new": 180, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 568번지 외 21필지", "name": "신정동 568구역", "mem": null, "old": 32, "new": 198, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 579-1번지 외 15필지", "name": "신정동 579-1번지 일원", "mem": null, "old": 33, "new": 162, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 579-1번지 외 12필지", "name": "신정동 579-1번지 일원", "mem": null, "old": 45, "new": 152, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 587-1번지 외 8필지", "name": "신정동 587-1번지 일원", "mem": null, "old": 57, "new": 135, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 790-8번지 외 29필지", "name": "신정동790-8번지 일원", "mem": null, "old": 79, "new": 150, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "야음동 368-1번지 외 49필지", "name": "야음동 368번지 일원", "mem": null, "old": 52, "new": 247, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "야음동 357-7번지 외 10필지", "name": "야음제1지구", "mem": 6, "old": 57, "new": 191, "stage": "이전고시", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1125-2번지 외 3필지", "name": "양지아파트", "mem": null, "old": 55, "new": 88, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1125-2번지 외 3필지", "name": "울산 문수로 양지아파트", "mem": null, "old": 55, "new": 88, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 1125-2번지", "name": "울산 문수로 양지아파트", "mem": null, "old": 52, "new": 92, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "남구", "loc": "신정동 587-4번지", "name": "태화연립", "mem": null, "old": 24, "new": 40, "stage": "동의서 검인", "stop": false}, {"kind": "소규모재건축", "gu": "남구", "loc": "야음동 490-2번지 일원", "name": "보라아파트", "mem": 72, "old": 85, "new": null, "stage": "조합설립인가", "stop": false}, {"kind": "소규모재건축", "gu": "남구", "loc": "신정동 1125-2번지", "name": "양지아파트", "mem": null, "old": 52, "new": 95, "stage": "조합설립인가", "stop": false}, {"kind": "소규모재건축", "gu": "남구", "loc": "두왕로34번길 9-20", "name": "크로바전원빌라", "mem": 119, "old": 112, "new": null, "stage": "조합설립동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "동구", "loc": "전하동 681-1번지", "name": "로얄맨션", "mem": 35, "old": 40, "new": 99, "stage": "준공", "stop": false}, {"kind": "가로주택", "gu": "북구", "loc": "염포동 521-1번지 일원", "name": "염포 중리마을 제2지구", "mem": null, "old": null, "new": 359, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "북구", "loc": "염포동 384번지 일원", "name": "중리1구역", "mem": null, "old": null, "new": 390, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "북구", "loc": "염포동 487-1번지 일원", "name": "중리3구역", "mem": null, "old": null, "new": 365, "stage": "동의서 검인", "stop": false}, {"kind": "가로주택", "gu": "울주군", "loc": "상북면 향산리  603-22 일원", "name": "서울산", "mem": 159, "old": 152, "new": 216, "stage": "조합설립인가", "stop": false}, {"kind": "가로주택", "gu": "울주군", "loc": "상북면 향산리 603-47 일원", "name": "청구골든맨션", "mem": null, "old": 127, "new": 186, "stage": "조합설립준비중", "stop": false}, {"kind": "소규모재건축", "gu": "울주군", "loc": "언양읍 서부리 378번지 일원", "name": "언양국민주택", "mem": null, "old": 101, "new": 222, "stage": "건축심의", "stop": false}, {"kind": "가로주택", "gu": "중구", "loc": "우정동 284-1번지 일원", "name": "우정동 284-1번지 일원", "mem": null, "old": null, "new": null, "stage": "동의서 검인", "stop": true}, {"kind": "가로주택", "gu": "동구", "loc": "방어동 120-5번지 일원", "name": "방아동 120-5번지 일원", "mem": null, "old": 83, "new": null, "stage": "기타(추진보류)", "stop": true}, {"kind": "가로주택", "gu": "동구", "loc": "방어동 934-1번지 일원", "name": "방어동 934-1번지 일원", "mem": null, "old": 67, "new": null, "stage": "기타(추진보류)", "stop": true}, {"kind": "가로주택", "gu": "동구", "loc": "서부동 244-1번지 일원", "name": "서부동 244-1번지 일원", "mem": null, "old": 217, "new": null, "stage": "기타(추진보류)", "stop": true}, {"kind": "소규모재건축", "gu": "울주군", "loc": "상북면 향산리 603-22", "name": "청구가든아파트", "mem": 125, "old": 152, "new": 200, "stage": "기타(사업중단)", "stop": true}], "redev_base": "2026.03.24", "small_base": "26.1분기", "stats": [{"v": "5곳", "k": "청약 진행·예정"}, {"v": "32곳", "k": "입주예정 단지 · 14,472세대"}, {"v": "23곳", "k": "재개발·재건축 구역"}, {"v": "44곳", "k": "가로주택·소규모재건축"}]};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const won = m => { const e = Math.floor(m / 10000), r = m % 10000; return (e ? e + "억" : "") + (r ? (e ? " " : "") + r.toLocaleString() : ""); };
+const WD = "일월화수목금토";
+const md = s => { const d = new Date(s + "T00:00:00"); return {t: (d.getMonth()+1) + "." + d.getDate(), w: WD[d.getDay()]}; };
+
+document.querySelectorAll(".asof").forEach(e => e.textContent = DATA.asof + " 기준");
+
+document.getElementById("stats").innerHTML = DATA.stats.map(s =>
+  `<div><b>${esc(s.v)}</b><span>${esc(s.k)}</span></div>`).join("");
+
+document.getElementById("sched-range").textContent = DATA.sched_range;
+document.getElementById("sched").innerHTML = DATA.sched.length ? DATA.sched.map(s => {
+  const d = md(s.date);
+  return `<li><div class="d">${d.t}<small>${d.w}</small></div><div class="n">${esc(s.name)}<small>${esc(s.what)}</small></div><span class="step${s.hot ? " hot" : ""}">${esc(s.tag)}</span></li>`;
+}).join("") : `<li class="empty">앞으로 2주 안에 예정된 울산 청약 일정이 없습니다.</li>`;
+
+const label = {live:["청약중","s-live"], soon:["청약예정","s-soon"], done:["분양완료","s-done"]};
+function plan(i){
+  let r = "", x = 14 + (i*7) % 20;
+  for (let k = 0; k < 5; k++){ const h = 46 + ((i+k)*13) % 34; r += `<rect x="${x+k*52}" y="${100-h}" width="34" height="${h}" rx="2" fill="var(--accent)" opacity="${.18+k%3*.1}"/>`; }
+  return `<svg viewBox="0 0 300 110" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="100" width="300" height="10" fill="var(--accent)" opacity=".25"/>${r}</svg>`;
+}
+function renderCards(f){
+  const list = DATA.bunyang.map((d,i) => ({d,i})).filter(o => f === "all" || o.d.s === f);
+  document.getElementById("cards").innerHTML = list.length ? list.map(({d,i}) => `
+    <article class="card"><div class="plan">${plan(i)}</div><div class="body">
+      <div class="chips"><span class="status ${label[d.s][1]}">${label[d.s][0]}</span><span class="kind">${esc(d.kind)}</span></div>
+      <h3>${esc(d.name)}</h3><div class="loc">${esc(d.loc)} · ${esc(d.builder)}</div>
+      <dl class="specs num">
+        <div><dt>공급 세대</dt><dd>${d.total.toLocaleString()}세대</dd></div>
+        <div><dt>3.3㎡당 분양가</dt><dd>${d.ppy ? d.ppy.toLocaleString() + "만원" : "—"}</dd></div>
+        <div><dt>전용면적</dt><dd>${esc(d.areas || "—")}</dd></div>
+        <div><dt>입주 예정</dt><dd>${esc(d.move || "—")}</dd></div>
+        <div><dt>모집공고</dt><dd>${esc(d.pblanc)}</dd></div>
+        <div><dt>당첨자 발표</dt><dd>${esc(d.win || "—")}</dd></div>
+      </dl>
+      <a class="more" href="#contact">분양 상담 받기 →</a>
+    </div></article>`).join("") : `<p class="note">해당하는 공고가 없습니다.</p>`;
+}
+document.querySelectorAll("#bunyang .filters button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#bunyang .filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderCards(b.dataset.f);
+}));
+renderCards("all");
+
+document.getElementById("deals").innerHTML = DATA.deals.map(d => {
+  let diff = `<td class="r flat">첫 거래</td>`;
+  if (d.prev != null){
+    const g = d.amount - d.prev;
+    diff = g > 0 ? `<td class="r up">▲ ${won(g)}</td>` : g < 0 ? `<td class="r down">▼ ${won(-g)}</td>` : `<td class="r flat">보합</td>`;
+  }
+  return `<tr><td>${esc(d.danji)}${d.high ? '<span class="new">신고가</span>' : ""}</td><td>${esc(d.gu)} ${esc(d.dong)}</td><td>${d.area}㎡<small>(${d.py}평형)</small></td><td>${d.floor}층</td><td class="r"><b>${won(d.amount)}</b></td>${diff}<td>${esc(d.ymd)}</td></tr>`;
+}).join("");
+
+
+/* ── 입주예정 · 재개발 (2026-09-19) ── */
+const GU = ["전체", "중구", "남구", "동구", "북구", "울주군"];
+const STAGES = ["사전타당성", "추진위 승인", "정비구역 지정", "조합설립 인가", "사업시행 인가", "관리처분 인가", "착공", "준공"];
+const pick = {movein: "전체", redev: "전체"};
+const inGu = (g, key) => pick[key] === "전체" || g === pick[key];
+
+function renderMovein(){
+  const rows = DATA.movein.filter(m => inGu(m.gu, "movein"));
+  let prevY = "";
+  document.getElementById("movein-rows").innerHTML = rows.length ? rows.map((m, i) => {
+    const y = m.ym.slice(0, 4), cls = i && y !== prevY ? ' class="yr"' : ""; prevY = y;
+    return `<tr${cls}><td class="ym">${esc(m.ym)}</td>
+      <td><b>${esc(m.name)}</b>${m.live ? '<span class="tag-live">청약 중</span>' : ""}</td>
+      <td>${esc(m.gu)} ${esc(m.dong)}</td><td class="r">${m.tot.toLocaleString()}세대</td>
+      <td>${esc(m.py)}</td><td>${esc(m.price)}</td><td>${esc(m.builder)}</td><td class="tag-dim">${esc(m.st)}</td></tr>`;
+  }).join("") : `<tr><td colspan="8" class="tag-dim">이 구에는 입주예정 단지가 없습니다.</td></tr>`;
+}
+
+function renderRedev(){
+  const zs = DATA.zones.filter(z => inGu(z.gu, "redev"));
+  document.getElementById("zones").innerHTML = zs.length ? zs.map(z => {
+    const k = z.k;
+    const bar = STAGES.map((s, i) => `<i class="${i < k ? "on" : i === k ? "now" : ""}" title="${s} ${z.steps[i] || ""}"></i>`).join("");
+    return `<article class="zone${k === 7 ? " fin" : ""}">
+      <div class="chips"><span class="ztype t-${esc(z.type)}">${esc(z.type)}</span></div>
+      <h3>${esc(z.gu)} ${esc(z.zone)} <small>${esc(z.area)}천㎡</small></h3>
+      <div class="loc">${esc(z.loc)}</div>
+      <div class="zbar" aria-hidden="true">${bar}</div>
+      <div class="now-step">${k >= 0 ? STAGES[k] : "계획 단계"}<span>${k >= 0 ? esc(z.steps[k]) : ""}</span></div>
+    </article>`;
+  }).join("") : `<p class="note">이 구에는 정비구역이 없습니다.</p>`;
+
+  const ss = DATA.small.filter(s => inGu(s.gu, "redev"));
+  const n = v => v == null ? "—" : v.toLocaleString();
+  document.getElementById("small-rows").innerHTML = ss.length ? ss.map(s =>
+    `<tr class="${s.stop ? "stop" : ""}"><td>${esc(s.gu)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.kind)}</td>
+     <td>${esc(s.loc)}</td><td>${esc(s.stage)}</td><td class="r">${n(s.mem)}</td><td class="r">${n(s.old)}</td><td class="r">${n(s.new)}</td></tr>`
+  ).join("") : `<tr><td colspan="8" class="tag-dim">이 구에는 소규모정비사업이 없습니다.</td></tr>`;
+}
+
+document.querySelectorAll(".gu-filter").forEach(box => {
+  const key = box.dataset.for;
+  box.innerHTML = GU.map(g => `<button data-g="${g}" aria-pressed="${g === "전체"}">${g}</button>`).join("");
+  box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    box.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    pick[key] = b.dataset.g;
+    key === "movein" ? renderMovein() : renderRedev();
+  }));
+});
+document.getElementById("legend-steps").innerHTML = "단계 순서 " + STAGES.map((s, i) => `<span>${i + 1} <b>${s}</b></span>`).join("");
+document.getElementById("redev-base").textContent = DATA.redev_base;
+document.getElementById("small-base").textContent = DATA.small_base;
+renderMovein();
+renderRedev();
+</script>
+</body>
+</html>
