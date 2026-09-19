@@ -508,6 +508,7 @@ tr.stop td{color:var(--ink-2)}
       <div><dt>주소</dt><dd>울산광역시 남구 수암로155번길 22-7, 103호</dd></div>
       <div><dt>연락처</dt><dd><a href="tel:0522544988">052-254-4988</a> · 휴대폰 <a href="tel:01036965677">010-3696-5677</a></dd></div>
     </dl>
+    <div><a href="about.html">사이트 소개 · 개인정보처리방침</a></div>
     <div>방문 통계를 위해 네이버 애널리틱스를 씁니다. 이름·연락처 같은 개인 식별 정보는 모으지 않습니다.</div><div>분양·재개발·시세 정보는 공공데이터를 가공한 참고 자료입니다. 청약 자격과 세부 조건은 입주자모집공고를, 정비사업 일정은 해당 구·군청과 조합 공고를 반드시 확인하세요. <span class="asof"></span></div>
   </div>
 </footer>
@@ -1180,7 +1181,8 @@ document.getElementById("zd-body").addEventListener("click", e => {
   document.getElementById("nav-study").hidden = false;
   document.getElementById("lessons").innerHTML = ls.map(l => l.html
     ? `<details class="lesson" data-no="${l.no}"><summary><span class="no">${l.no}강</span><span class="t">${esc(l.title)}</span><span class="arrow">▼</span></summary>
-       <div class="body">${l.html}${l.date ? `<div class="date">${esc(l.date)} · 울산부동산리더</div>` : ""}</div></details>`
+       <div class="body">${l.html}${l.date ? `<div class="date">${esc(l.date)} · 울산부동산리더</div>` : ""}
+       <a class="zd-lesson" href="study/${String(l.no).padStart(2, "0")}.html">이 강만 따로 보기 · 주소 공유하기 →</a></div></details>`
     : `<div class="lesson soon"><summary><span class="no">${l.no}강</span><span class="t">${esc(l.title)}</span><span class="arrow">준비 중</span></summary></div>`
   ).join("");
 })();
