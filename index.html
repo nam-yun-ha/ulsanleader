@@ -258,8 +258,23 @@ dialog.zdlg::backdrop{background:rgba(10,20,18,.55)}
 .zd-askbtns a.ask-sms{background:var(--accent);color:#fff;border-color:var(--accent)}
 .lessons{display:grid;gap:10px;counter-reset:ls}
 /* 날짜별 실거래 (2026-09-19 대표님) */
-.daybar{margin-top:6px}
-#monbar button{font-weight:700}
+/* 달력 (2026-09-19 대표님 — 달력에서 날짜를 누른다) */
+.cal{max-width:420px;margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-h b{font-size:17px}
+.cal-h button{font:inherit;font-size:16px;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+.cal-h button:disabled{opacity:.3;cursor:default}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-g .wd{font-size:12px;color:var(--ink-2);padding:2px 0}
+.cal-g .wd.sun,.cal-g .sun .dn{color:#C0392B} .cal-g .wd.sat,.cal-g .sat .dn{color:#2E5DA8}
+.cal-g .c{min-height:48px;border-radius:8px;padding:4px 0;font-size:14px;color:var(--line)}
+.cal-g button.c{font:inherit;border:1px solid var(--accent);background:var(--accent-soft);color:var(--ink);cursor:pointer}
+.cal-g button.c:hover{background:var(--surface)}
+.cal-g button.c.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cal-g button.c.on .dn,.cal-g button.c.on small{color:#fff}
+.cal-g .c .dn{display:block;font-weight:700}
+.cal-g .c small{display:block;font-size:10px;color:var(--ink-2);line-height:1.2}
+.cal-note{font-size:12px;color:var(--ink-2);margin-top:8px}
 .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
 @media (max-width:900px){.dgrid{grid-template-columns:1fr}}
 .dbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -459,8 +474,7 @@ tr.stop td{color:var(--ink-2)}
 <section class="block alt" id="trade">
   <div class="wrap">
     <div class="head"><div><h2>울산 실거래 — 날짜별</h2><p>국토교통부에 실거래가 공개된 날마다 국민평형(31~35평)·실속형(21~29평)·분양권·전세를 10개씩 모았습니다. 매일 아침 카드뉴스와 같은 자료입니다.</p></div></div>
-    <div class="filters daybar" role="group" aria-label="달 고르기" id="monbar"></div>
-    <div class="filters daybar" role="group" aria-label="공개일 고르기" id="daybar"></div>
+    <div class="cal" id="cal" aria-label="실거래 공개일 달력"></div>
     <p class="note" id="daysum" style="margin:10px 0 0"></p>
     <div class="dgrid" id="dgrid"></div>
     <p class="note">날짜는 실거래가 공개된 날(계약일은 표 안에) · 금액 단위 만원 · 신고가 = 같은 단지·면적의 예전 최고가 이상 · 국민평형·실속형은 누르면 자세히 · 출처: 국토교통부 아파트 매매·분양권·전월세 실거래가 · <span class="asof"></span></p>
@@ -584,15 +598,30 @@ async function loadDay(d) {                           /* 페이지 안에 없는
   ["gm", "ss", "bt"].forEach(k => x[k] = x[k].map(r => Object.assign({}, r, {i: r.i >= 0 ? r.i + off : -1})));
   return (dayCache[d] = x);
 }
+function renderCal() {
+  const [y, m] = curMon.split(".").map(Number);
+  const mons = [...new Set(DAYS.map(x => x.d.slice(0, 7)))].sort();
+  const mi = mons.indexOf(curMon);
+  const byDay = {}; DAYS.forEach(x => { byDay[x.d] = x; });
+  const first = new Date(y, m - 1, 1).getDay(), last = new Date(y, m, 0).getDate();
+  let cells = "일월화수목금토".split("").map((w, i) => `<div class="wd${i === 0 ? " sun" : i === 6 ? " sat" : ""}">${w}</div>`).join("");
+  for (let i = 0; i < first; i++) cells += `<div></div>`;
+  for (let dd = 1; dd <= last; dd++) {
+    const key = `${y}.${String(m).padStart(2, "0")}.${String(dd).padStart(2, "0")}`, x = byDay[key];
+    const wk = (first + dd - 1) % 7, cls = wk === 0 ? " sun" : wk === 6 ? " sat" : "";
+    cells += x
+      ? `<button type="button" class="c${cls}${key === curDay ? " on" : ""}" data-d="${key}" aria-label="${m}월 ${dd}일 실거래 보기"><span class="dn">${dd}</span><small>매매 ${x.n.apt}</small></button>`
+      : `<div class="c${cls}"><span class="dn">${dd}</span></div>`;
+  }
+  document.getElementById("cal").innerHTML =
+    `<div class="cal-h"><button type="button" data-mv="-1" ${mi <= 0 ? "disabled" : ""} aria-label="이전 달">◀</button>
+       <b>${y}년 ${m}월</b>
+       <button type="button" data-mv="1" ${mi < 0 || mi >= mons.length - 1 ? "disabled" : ""} aria-label="다음 달">▶</button></div>
+     <div class="cal-g">${cells}</div>
+     <div class="cal-note">진하게 표시된 날이 실거래가 공개된 날입니다. 눌러서 보세요.</div>`;
+}
 function renderDaily() {
-  const W = "일월화수목금토";
-  const mons = [...new Set(DAYS.map(x => x.d.slice(0, 7)))];
-  document.getElementById("monbar").innerHTML = mons.map(m =>
-    `<button data-m="${m}" aria-pressed="${m === curMon}">${m.slice(0, 4)}년 ${+m.slice(5)}월</button>`).join("");
-  document.getElementById("daybar").innerHTML = DAYS.filter(x => x.d.startsWith(curMon)).map(x => {
-    const dt = new Date(x.d.replace(/\./g, "-") + "T00:00:00");
-    return `<button data-d="${x.d}" aria-pressed="${x.d === curDay}">${+x.d.slice(5, 7)}.${+x.d.slice(8)}(${W[dt.getDay()]})</button>`;
-  }).join("");
+  renderCal();
   const grid = document.getElementById("dgrid"), sum = document.getElementById("daysum");
   if (!curDay) { grid.innerHTML = `<p class="note">아직 모인 날짜가 없습니다.</p>`; return; }
   const x = dayCache[curDay];
@@ -621,14 +650,14 @@ function renderDaily() {
     box("분양권 TOP10", "거래금액 순", x.bt, sale) +
     box("전세 TOP10", "보증금 높은 순", x.rt, rent);
 }
-document.getElementById("monbar").addEventListener("click", e => {
-  const b = e.target.closest("button[data-m]"); if (!b) return;
-  curMon = b.dataset.m;
-  const first = DAYS.find(x => x.d.startsWith(curMon));   /* 그 달의 가장 최근 날 */
-  if (first) curDay = first.d;
-  renderDaily();
-});
-document.getElementById("daybar").addEventListener("click", e => {
+document.getElementById("cal").addEventListener("click", e => {
+  const mv = e.target.closest("button[data-mv]");
+  if (mv) {
+    const mons = [...new Set(DAYS.map(x => x.d.slice(0, 7)))].sort();
+    const nm = mons[mons.indexOf(curMon) + +mv.dataset.mv];
+    if (nm) { curMon = nm; renderCal(); }            /* 달만 넘긴다 — 보던 날짜 표는 그대로 */
+    return;
+  }
   const b = e.target.closest("button[data-d]"); if (!b) return;
   curDay = b.dataset.d; renderDaily();
 });
