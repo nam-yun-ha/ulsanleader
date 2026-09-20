@@ -349,7 +349,7 @@ tr.stop td{color:var(--ink-2)}
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#">
+    <a class="logo" href="./" id="logo-home">
       <span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span><b>울산부동산리더</b><small>ULSAN 분양 · 재개발</small></span>
     </a>
@@ -1218,6 +1218,17 @@ document.getElementById("zd-body").addEventListener("click", e => {
        <a class="zd-lesson" href="study/${String(l.no).padStart(2, "0")}.html">이 강만 따로 보기 · 주소 공유하기 →</a></div></details>`
     : `<div class="lesson soon"><summary><span class="no">${l.no}강</span><span class="t">${esc(l.title)}</span><span class="arrow">준비 중</span></summary></div>`
   ).join("");
+})();
+
+/* ── 로고를 누르면 맨 위로 + 주소의 #꼬리표를 지운다 (2026-09-21 대표님 — 주소를 복사해 쓸 때 #study 가 따라붙는다) ── */
+(function () {
+  const a = document.getElementById("logo-home");
+  if (!a) return;
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    history.replaceState(null, "", location.pathname + location.search);
+    scrollTo({top: 0, behavior: "smooth"});
+  });
 })();
 
 /* ── 머리 — 스크롤을 내리면 전화번호 줄을 접고, 올리면 다시 편다 (2026-09-21 대표님) ── */
