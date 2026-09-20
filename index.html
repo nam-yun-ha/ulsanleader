@@ -86,12 +86,12 @@ nav.menu a:hover{color:var(--accent)}
   html{scroll-padding-top:120px}}
 @media (max-width:760px){                     /* 휴대폰에서도 메뉴를 보인다 — 머리 밑 한 줄, 옆으로 밀어서 본다 (2026-09-21 대표님) */
   .top .wrap{flex-wrap:wrap;height:auto;padding-top:10px;gap:8px}
-  nav.menu{order:9;width:100%;margin:0 -14px;padding:2px 14px 6px;gap:0;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  nav.menu::-webkit-scrollbar{display:none}
-  nav.menu a{flex:0 0 auto;padding:7px 11px;font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;border-radius:6px}
+  nav.menu{order:9;width:100%;margin:0;padding:0 0 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px}   /* 두 줄로 여덟 개를 한 번에 (2026-09-21 대표님) */
+  nav.menu a{padding:8px 2px;font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;text-align:center;border-radius:6px}
   nav.menu a:active{background:var(--accent-soft);color:var(--accent)}
   .social{margin-left:auto}.call{margin-left:6px;padding:8px 11px}
-  html{scroll-padding-top:160px}}          /* 머리가 메뉴 줄만큼 높아졌다 */
+  html{scroll-padding-top:196px}}          /* 머리가 메뉴 두 줄만큼 높아졌다 */
+@media (max-width:400px){nav.menu a{font-size:14px}}
 @media (max-width:480px){.call .num-t{display:none}.call{padding:7px 9px}.social{gap:4px}.social a{font-size:12px;padding:4px 7px}.logo small{display:none}.logo b{font-size:15px}.logo-mark{width:26px;height:26px;padding:3px}.logo{gap:7px}.top .wrap{gap:8px;padding-inline:14px}}
 
 .hero{background:var(--hero);color:var(--hero-ink)}
