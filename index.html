@@ -123,6 +123,10 @@ section.block{padding-block:56px}
 .head h2{font-size:26px}
 .head p{margin:4px 0 0;color:var(--ink-2)}
 .filters{display:flex;gap:6px;flex-wrap:wrap}
+.study-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:-8px 0 22px}
+.study-tabs button{font:inherit;font-size:18px;font-weight:700;padding:16px 18px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.study-tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.study-tabs button:hover{border-color:var(--accent)}
 .filters button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:6px 14px;border-radius:999px;cursor:pointer}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
 .filters button:focus-visible,.call:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -471,11 +475,12 @@ tr.stop td{color:var(--ink-2)}
 
 <section class="block alt" id="study" hidden>
   <div class="wrap">
-    <div class="head"><div><h2>공부방</h2><p>처음이신 분도 1강부터 차례대로 읽으면 알 수 있게 정리합니다. 울산부동산리더 공인중개사가 직접 씁니다.</p></div>
-      <div class="filters" id="study-tabs" role="group" aria-label="공부방 고르기">
-        <button type="button" data-t="redev" aria-pressed="true">재개발 공부방</button>
-        <button type="button" data-t="cy" aria-pressed="false" hidden>청약·분양 공부방</button>
-      </div></div>
+    <div class="head"><div><h2>공부방</h2><p>처음이신 분도 1강부터 차례대로 읽으면 알 수 있게 정리합니다. 울산부동산리더 공인중개사가 직접 씁니다.</p></div></div>
+    <!-- 탭은 제목 바로 아래 크게 (2026-09-22 대표님 — 오른쪽 옆에 있으니 잘 안 보인다) -->
+    <div class="study-tabs" id="study-tabs" role="group" aria-label="공부방 고르기">
+      <button type="button" data-t="redev" aria-pressed="true">🏗️ 재개발 공부방</button>
+      <button type="button" data-t="cy" aria-pressed="false" hidden>🏠 청약·분양 공부방</button>
+    </div>
     <div id="study-redev">
       <div class="lessons" id="lessons"></div>
       <p class="note">일반적인 제도 설명입니다. 구역마다 조합 정관과 인가 조건이 다르니, 실제 판단 전에는 조합 공고와 구·군청을 꼭 확인하세요.</p>
