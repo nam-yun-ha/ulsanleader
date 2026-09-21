@@ -887,6 +887,16 @@ const APT_LINKS = {"2026000403": "bunyang/grandlac-eileen.html", "그랑라크 �
 const aptStory = (...keys) => { for (const k of keys) if (k && APT_LINKS[k]) return APT_LINKS[k]; return ""; };
 const APT_BLOG = {"2026000403": "https://blog.naver.com/lofty6878/224417479688", "그랑라크 에일린의 뜰": "https://blog.naver.com/lofty6878/224417479688"};                      /* 같은 글이 실린 네이버 블로그 (2026-09-20) */
 const aptBlog = (...keys) => { for (const k of keys) if (k && APT_BLOG[k]) return APT_BLOG[k]; return ""; };
+/* 청약 결과 표 — 분양 창 · 입주예정 창이 같이 쓴다 (2026-09-22 대표님 · 청약결과_알림.py → 청약/결과.json) */
+function resTable(r) {
+  const sc = r && r.stage === "가점";
+  return r ? `<div><h4>청약 결과 <span class="zd-note">(청약홈 ${esc(r.d.replace(/-/g, "."))} 발표 · 1순위 해당지역 기준)</span></h4>
+    <div class="zd-scroll"><table class="zd-tbl num"><thead><tr><th>주택형</th><th>공급</th><th>1순위 경쟁률</th>${sc ? "<th>당첨가점</th>" : ""}</tr></thead><tbody>${
+      r.rows.map(x => `<tr><td>${esc(x.t)}</td><td>${esc(x.sup)}세대</td><td>${x.rate ? `<b>${esc(x.rate)} : 1</b>` : x.short ? `미달 ${esc(x.short)}세대` : "—"}</td>${
+        sc ? `<td>${x.score ? `${esc(x.score[0])}~${esc(x.score[1])}점 <small style="color:var(--ink-2)">(평균 ${esc(x.score[2])})</small>` : "—"}</td>` : ""}</tr>`).join("")
+    }</tbody></table></div>
+    <p class="zd-note" style="margin-top:6px">일반공급 총 접수 ${esc(r.total || "—")}건 · 미달은 1·2순위를 모두 받고도 남은 세대입니다. 무순위·선착순으로 다시 나오는지는 청약홈 공고로 확인하세요.</p></div>` : "";
+}
 function openApt(i) {
   const d = DATA.bunyang[i];
   curZone = null; curApt = i; curMove = null; curDeal = null; curSmall = null;
@@ -907,14 +917,7 @@ function openApt(i) {
   const types = d.types.map(t => `<tr><td>${esc(t.t)}</td><td>${t.ex ? t.ex + "㎡" : "—"}</td><td>${t.sup ? t.sup + "㎡" : "—"}</td>
       <td>${t.n ? t.n.toLocaleString() : "—"}${t.sp ? ` <small style="color:var(--ink-2)">(특공 ${t.sp})</small>` : ""}</td>
       <td><b>${t.amt ? eok(t.amt) : "—"}</b></td></tr>`).join("");
-  /* 청약 결과 — 경쟁률 · 당첨가점 · 미달 (2026-09-22 대표님 · 청약결과_알림.py → 청약/결과.json) */
-  const r = d.res, sc = r && r.stage === "가점";
-  const res = r ? `<div><h4>청약 결과 <span class="zd-note">(청약홈 ${esc(r.d.replace(/-/g, "."))} 발표 · 1순위 해당지역 기준)</span></h4>
-    <div class="zd-scroll"><table class="zd-tbl num"><thead><tr><th>주택형</th><th>공급</th><th>1순위 경쟁률</th>${sc ? "<th>당첨가점</th>" : ""}</tr></thead><tbody>${
-      r.rows.map(x => `<tr><td>${esc(x.t)}</td><td>${esc(x.sup)}세대</td><td>${x.rate ? `<b>${esc(x.rate)} : 1</b>` : x.short ? `미달 ${esc(x.short)}세대` : "—"}</td>${
-        sc ? `<td>${x.score ? `${esc(x.score[0])}~${esc(x.score[1])}점 <small style="color:var(--ink-2)">(평균 ${esc(x.score[2])})</small>` : "—"}</td>` : ""}</tr>`).join("")
-    }</tbody></table></div>
-    <p class="zd-note" style="margin-top:6px">일반공급 총 접수 ${esc(r.total || "—")}건 · 미달은 1·2순위를 모두 받고도 남은 세대입니다. 무순위·선착순으로 다시 나오는지는 청약홈 공고로 확인하세요.</p></div>` : "";
+  const res = resTable(d.res);
   const q = encodeURIComponent(d.map || d.addr);
   const ask = `울산부동산리더 홈페이지에서 봤습니다. ${d.name} 분양 문의드립니다.`;
   document.getElementById("zd-body").innerHTML = `
@@ -1100,6 +1103,7 @@ function openMove(i) {
       <a href="${APPLYHOME}" target="_blank" rel="noopener">청약홈 바로가기 →</a></div>
     ${ns ? `<div><h4>분양 공고 이력 <span class="zd-note">(최근 공고부터)</span></h4><ul class="zd-ns">${ns}</ul>
       <p class="zd-note" style="margin-top:6px">세대수는 청약홈 일반분양 기준입니다. 입주예정월은 공고 기준이라 실제 입주와 다를 수 있습니다.</p></div>` : ""}
+    ${resTable((m.ns.map(n => ((n.url || "").match(/houseManageNo=(\d+)/) || [])[1]).map(no => (DATA.bunyang.find(x => x.no === no) || {}).res).find(Boolean)))}
     ${typeTable(m.types)}
     ${askBox(ask, "이 단지")}
     ${mapBox(encodeURIComponent(m.map || m.addr), m.name, "공급 위치 : " + esc(m.addr))}`;
