@@ -895,6 +895,7 @@ function resTable(r) {
       r.rows.map(x => `<tr><td>${esc(x.t)}</td><td>${esc(x.sup)}세대</td><td>${x.rate ? `<b>${esc(x.rate)} : 1</b>` : x.short ? `미달 ${esc(x.short)}세대` : "—"}</td>${
         sc ? `<td>${x.score ? `${esc(x.score[0])}~${esc(x.score[1])}점 <small style="color:var(--ink-2)">(평균 ${esc(x.score[2])})</small>` : "—"}</td>` : ""}</tr>`).join("")
     }</tbody></table></div>
+    ${sc ? `<p class="zd-note" style="margin-top:6px">당첨가점은 가점제(84점 만점 · 무주택 기간 + 부양가족 + 청약통장 기간)로 뽑힌 사람의 점수로, 최저 점수가 사실상 커트라인입니다. 일부 세대는 점수 없이 추첨으로 뽑습니다.</p>` : ""}
     <p class="zd-note" style="margin-top:6px">일반공급 총 접수 ${esc(r.total || "—")}건 · 미달은 1·2순위를 모두 받고도 남은 세대입니다. 무순위·선착순으로 다시 나오는지는 청약홈 공고로 확인하세요.</p></div>` : "";
 }
 function openApt(i) {
