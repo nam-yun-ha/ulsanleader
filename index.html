@@ -1312,7 +1312,9 @@ const EDIT_APP = "https://claude.ai/artifact/FgXKTBybS3ifRbAQs9568c";
 const canEdit = (() => {
   try {
     const u = new URL(location.href);
-    if (u.searchParams.has("편집")) localStorage.setItem("ulsan-edit", u.searchParams.get("편집"));
+    const v = u.searchParams.get("편집") ?? u.searchParams.get("edit");   /* 한글·영어 둘 다 (2026-09-23) */
+    if (v !== null) localStorage.setItem("ulsan-edit", v);
+    if (/(^|[?&#])(편집|edit)=1/.test(location.href)) localStorage.setItem("ulsan-edit", "1");
     return localStorage.getItem("ulsan-edit") === "1";
   } catch (e) { return false; }
 })();
