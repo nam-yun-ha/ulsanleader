@@ -921,8 +921,12 @@ function spTable(r) {
     <p class="zd-note" style="margin-top:6px">특별공급 ${s.alloc}세대에 ${s.apply.toLocaleString()}건${s.alloc ? ` · 평균 ${(s.apply / s.alloc).toFixed(1)}대 1` : ""}${by ? `<br>유형별 접수 ${by}` : ""}<br>특별공급에서 미달된 세대는 일반공급으로 넘어갑니다.</p></div>`;
 }
 function resTable(r) {
-  const sc = r && r.stage === "가점";
-  return r ? `<div><h4>청약 결과 <span class="zd-note">(청약홈 ${esc(r.d.replace(/-/g, "."))} 발표 · 1순위 해당지역 기준)</span></h4>
+  // ★ 특별공급 결과만 있고 1순위 경쟁률은 아직 없는 공고가 있다 (더샵 시에르네 2회차).
+  //   그때 r.d 가 없어 replace 에서 죽고 **상세 창 전체가 빈 채로 열렸다** (2026-09-29 대표님
+  //   「더샵시에르네는 타입별 분양가·일정 이런 게 클릭이 안 돼」). 있을 때만 그린다.
+  const ok = r && r.d && Array.isArray(r.rows) && r.rows.length;
+  const sc = ok && r.stage === "가점";
+  return ok ? `<div><h4>청약 결과 <span class="zd-note">(청약홈 ${esc(r.d.replace(/-/g, "."))} 발표 · 1순위 해당지역 기준)</span></h4>
     <div class="zd-scroll"><table class="zd-tbl num"><thead><tr><th>주택형</th><th>공급</th><th>1순위 경쟁률</th>${sc ? "<th>당첨가점</th>" : ""}</tr></thead><tbody>${
       r.rows.map(x => `<tr><td>${esc(x.t)}</td><td>${esc(x.sup)}세대</td><td>${x.rate ? `<b>${esc(x.rate)} : 1</b>` : x.short ? `미달 ${esc(x.short)}세대` : "—"}</td>${
         sc ? `<td>${x.score ? `${esc(x.score[0])}~${esc(x.score[1])}점 <small style="color:var(--ink-2)">(평균 ${esc(x.score[2])})</small>` : "—"}</td>` : ""}</tr>`).join("")
