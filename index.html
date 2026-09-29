@@ -129,6 +129,10 @@ section.block{padding-block:56px}
 .study-tabs button:hover{border-color:var(--accent)}
 .ytwrap{max-width:300px;margin:0 auto 16px;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#000}
 .ytwrap iframe{width:100%;height:100%;border:0;display:block}
+.ytgo{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 6px}
+.ytgo a{flex:1 1 170px;text-align:center;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;text-decoration:none}
+.ytgo a.sub{background:#E12F2C;border-color:#E12F2C;color:#fff}
+.subbtn{display:inline-block;padding:12px 20px;border-radius:10px;background:#E12F2C;color:#fff;font-weight:700;text-decoration:none;white-space:nowrap}
 .filters button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:6px 14px;border-radius:999px;cursor:pointer}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
 .filters button:focus-visible,.call:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -512,7 +516,7 @@ tr.stop td{color:var(--ink-2)}
 
 <section class="block" id="info" hidden>
   <div class="wrap">
-    <div class="head"><div><h2>부동산정보</h2><p>유튜브에 올린 부동산 정보 영상을 주제별로 모았습니다. 영상과 함께 근거 조문과 확인하는 곳을 적어 두었습니다.</p></div></div>
+    <div class="head"><div><h2>부동산정보</h2><p>유튜브에 올린 부동산 정보 영상을 주제별로 모았습니다. 영상과 함께 근거 조문과 확인하는 곳을 적어 두었습니다.</p></div><div><a class="subbtn" href="https://www.youtube.com/@budongsanreader?sub_confirmation=1" target="_blank" rel="noopener">＋ 유튜브 채널 구독하기</a></div></div>
     <div class="study-tabs" id="info-tabs" role="group" aria-label="분류 고르기"></div>
     <div class="lessons" id="infolist"></div>
     <p class="note">제도는 바뀝니다. 글마다 올린 날짜를 확인하시고, 실제 판단 전에는 관할 관청과 공식 자료로 다시 확인하세요.</p>
@@ -1428,6 +1432,7 @@ function infoOpen(no) {
         <div class="ytwrap"><iframe loading="lazy" src="https://www.youtube.com/embed/${esc(x.vid)}" title="${esc(x.title)}" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
         ${x.html}
         ${x.laws ? `<div class="caseinfo">근거 ${esc(x.laws)}</div>` : ""}
+        <div class="ytgo"><a href="https://youtu.be/${esc(x.vid)}" target="_blank" rel="noopener">▶ 유튜브에서 보기</a><a class="sub" href="https://www.youtube.com/@budongsanreader?sub_confirmation=1" target="_blank" rel="noopener">＋ 채널 구독하기</a></div>
         <a class="zd-lesson" href="info/${String(x.no).padStart(2, "0")}.html">이 글만 따로 보기 · 주소 공유하기 →</a>${editBtn("부동산정보", x.file)}
       </div></details>`;
   const draw = c => { document.getElementById("infolist").innerHTML = xs.filter(x => !c || x.cat === c).map(item).join(""); };
