@@ -1401,12 +1401,16 @@ function editBtn(folder, file) {
 /* 「✏ 수정」 — claude.ai 가 주소 끝 #f=… 를 「글 고치기」 안쪽에 넘겨주지 않아, 「폴더/파일」을 복사해 두고 거기서 붙여넣게 한다 (2026-10-04 대표님) */
 document.addEventListener("click", e => {
   const a = e.target.closest("a.editbtn[data-editf]"); if (!a) return;
-  const f = a.dataset.editf;
-  try {
-    (navigator.clipboard ? navigator.clipboard.writeText(f) : Promise.reject()).then(
-      () => toast("「글 고치기」가 열리면 Ctrl+V 로 붙여넣으세요 — 이 글이 바로 열립니다"),
-      () => toast("「글 고치기」 검색칸에 " + f + " 를 넣으세요"));
-  } catch (err) {}
+  e.preventDefault();                               /* 복사를 먼저 끝내고 연다 — 새 탭이 먼저 열리면 복사가 실패한다 */
+  const f = a.dataset.editf, url = a.href;
+  const go = ok => { window.open(url, "_blank", "noopener");
+    toast(ok ? "복사했습니다 — 「글 고치기」 검색칸에서 Ctrl+V 하면 이 글이 바로 열립니다" : "「글 고치기」 검색칸에 " + f + " 를 넣으세요"); };
+  const fallback = () => {                         /* 옛 방식 복사 */
+    const t = document.createElement("textarea"); t.value = f; t.style.position = "fixed"; t.style.opacity = "0";
+    document.body.appendChild(t); t.select(); let ok = false; try { ok = document.execCommand("copy"); } catch (x) {} t.remove(); return ok;
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(f).then(() => go(true), () => go(fallback()));
+  else go(fallback());
 });
 
 /* ── 공부방 — 재개발 · 청약·분양 두 갈래 (2026-09-22 대표님). 공개된 글이 하나라도 있는 갈래만 보인다 ── */
