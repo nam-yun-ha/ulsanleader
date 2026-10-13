@@ -320,6 +320,16 @@ nav.menu a.on{color:var(--accent);font-weight:700}
 .past-rows .pd{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .past-rows .pn{font-weight:700;min-width:0}.past-rows .pn small{display:block;font-weight:500;font-size:12px;color:var(--ink-2)}
 .past-rows .pt{font-size:12.5px;color:var(--ink-2);white-space:nowrap;text-align:right}
+/* 따로 페이지로 가는 큰 칸 (2026-10-13) — 글 속 링크는 안 보여서 */
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 20px}
+.jump a{display:grid;gap:4px;padding:16px 18px;border-radius:12px;background:var(--accent);color:#fff;text-decoration:none;border:2px solid var(--accent);transition:transform .12s}
+.jump a:hover{transform:translateY(-2px)}
+.jump a b{font-size:18px;line-height:1.3}
+.jump a span{font-size:13.5px;line-height:1.5;opacity:.92}
+.jump a i{font-style:normal;font-weight:700;font-size:13.5px;margin-top:4px;color:#FFE58A}
+.jump a:nth-child(2){background:var(--surface);color:var(--ink)}.jump a:nth-child(2) i{color:var(--accent)}
+.jump a:nth-child(3){background:var(--accent-soft);color:var(--ink);border-color:var(--accent-soft)}.jump a:nth-child(3) i{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.jump a{transition:none}}
 /* 울산 아파트 시장 흐름 (2026-10-13) — 실거래 칸 맨 위 · 처음부터 HTML 에 들어 있다 */
 .trend{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:0 0 22px;display:grid;gap:14px}
 .trend h3{margin:0;font-size:18px} .trend h3 small{font-weight:500;font-size:12.5px;color:var(--ink-2);margin-left:8px}
@@ -480,7 +490,7 @@ tr.stop td{color:var(--ink-2)}
 <section class="block" id="bunyang">
   <div class="wrap">
     <div class="head">
-      <div><h2>울산 분양소식</h2><p>청약홈 모집공고 기준 · 평당가는 주택형별 최고 분양가의 공급면적 가중 평균입니다. <a href="apt/"><b>단지별 페이지로 보기(청약 결과 · 분양권 실거래 포함) →</b></a></p></div>
+      <div><h2>울산 분양소식</h2><p>청약홈 모집공고 기준 · 평당가는 주택형별 최고 분양가의 공급면적 가중 평균입니다.</p></div>
       <div class="filters" role="group" aria-label="분양 상태 필터">
         <button data-f="all" aria-pressed="true">전체</button>
         <button data-f="청약 예정" aria-pressed="false">청약 예정</button>
@@ -492,6 +502,10 @@ tr.stop td{color:var(--ink-2)}
         <button data-f="입주 완료" aria-pressed="false">입주 완료</button>
       </div>
     </div>
+    <div class="jump">
+      <a href="apt/"><b>단지별 분양 페이지</b><span>청약 일정 · 주택형별 분양가 · 경쟁률 · 분양권 실거래</span><i>보러 가기 →</i></a>
+      <a href="apt/#past"><b>지난 분양 공고</b><span>2020년부터 울산 분양 공고 전부 · 그때 분양가와 지금 실거래</span><i>보러 가기 →</i></a>
+    </div>
     <div class="grid" id="cards"></div>
     <div id="past-list" class="past" hidden></div>
   </div>
@@ -500,8 +514,11 @@ tr.stop td{color:var(--ink-2)}
 <section class="block alt" id="movein">
   <div class="wrap">
     <div class="head">
-      <div><h2>울산 입주예정 아파트</h2><p>입주 순서대로 · 세대수는 청약홈 <b>일반분양</b> 기준입니다(조합원 몫 제외). <a href="apt/#movein"><b>단지별 페이지로 보기 →</b></a></p></div>
+      <div><h2>울산 입주예정 아파트</h2><p>입주 순서대로 · 세대수는 청약홈 <b>일반분양</b> 기준입니다(조합원 몫 제외).</p></div>
       <div class="filters gu-filter" role="group" aria-label="입주예정 구 필터" data-for="movein"></div>
+    </div>
+    <div class="jump">
+      <a href="apt/#movein"><b>입주예정 단지별 페이지</b><span>주택형 · 분양가 · 공고 이력 · 분양권 실거래 · 주변 시세</span><i>보러 가기 →</i></a>
     </div>
     <div id="movein-sum" class="msum"></div>
     <div class="tablebox">
@@ -517,8 +534,11 @@ tr.stop td{color:var(--ink-2)}
 <section class="block" id="redev">
   <div class="wrap">
     <div class="head">
-      <div><h2>울산 재개발 · 재건축</h2><p>울산시 도시정비사업 추진현황 <span id="redev-base"></span> 기준 · 구역마다 지금 어느 단계인지 보여 드립니다. <a href="redev/"><b>구역별 페이지로 보기(인근 아파트 실거래 포함) →</b></a></p></div>
+      <div><h2>울산 재개발 · 재건축</h2><p>울산시 도시정비사업 추진현황 <span id="redev-base"></span> 기준 · 구역마다 지금 어느 단계인지 보여 드립니다.</p></div>
       <div class="filters gu-filter" role="group" aria-label="재개발 구 필터" data-for="redev"></div>
+    </div>
+    <div class="jump">
+      <a href="redev/"><b>구역별 재개발 페이지</b><span>단계별 날짜 · 들어서는 아파트 · 인근 아파트 실거래</span><i>보러 가기 →</i></a>
     </div>
     <p class="legend-steps" id="legend-steps"></p>
     <div class="zgrid" id="zones"></div>
@@ -630,7 +650,12 @@ tr.stop td{color:var(--ink-2)}
 
 <section class="block alt" id="trade">
   <div class="wrap">
-    <div class="head"><div><h2>울산 실거래 — 날짜별</h2><p>국토교통부에 실거래가 공개된 날마다 국민평형(31~35평)·실속형(21~29평)·분양권·전세를 10개씩 모았습니다. 매일 아침 카드뉴스와 같은 자료입니다. <a href="danji/"><b>단지별 실거래가 · 평형별 시세 보기 →</b></a> · <a href="rank/"><b>달마다 거래량 순위 · 고가 거래 →</b></a> · <a href="weekly/"><b>주간분석 →</b></a></p></div></div>
+    <div class="head"><div><h2>울산 실거래 — 날짜별</h2><p>국토교통부에 실거래가 공개된 날마다 국민평형(31~35평)·실속형(21~29평)·분양권·전세를 10개씩 모았습니다. 매일 아침 카드뉴스와 같은 자료입니다.</p></div></div>
+    <div class="jump">
+      <a href="danji/"><b>단지별 실거래가</b><span>울산 아파트 1,968곳 · 평형별 최근 거래 · 역대 최고가 · 전세</span><i>보러 가기 →</i></a>
+      <a href="rank/"><b>거래량 순위 · 고가 거래</b><span>달마다 많이 거래된 단지 TOP 20 · 가장 비싼 거래 TOP 10</span><i>보러 가기 →</i></a>
+      <a href="weekly/"><b>주간분석</b><span>매주 매매 · 전세 변동률 · 구군별 · 신고가</span><i>보러 가기 →</i></a>
+    </div>
     <div class="trend" id="trend"><h3>울산 아파트 시장 흐름 <small>2026.10.13 기준 · 매일 새로</small></h3><div class="tr-bars" role="img" aria-label="최근 12달 울산 아파트 매매 거래량"><div class="tb-col"><span class="tb-n">1,445</span><i style="height:97%"></i><span class="tb-m">11월</span></div><div class="tb-col"><span class="tb-n">1,146</span><i style="height:77%"></i><span class="tb-m">12월</span></div><div class="tb-col"><span class="tb-n">1,491</span><i style="height:100%"></i><span class="tb-m">1월</span></div><div class="tb-col"><span class="tb-n">1,228</span><i style="height:82%"></i><span class="tb-m">2월</span></div><div class="tb-col"><span class="tb-n">1,364</span><i style="height:91%"></i><span class="tb-m">3월</span></div><div class="tb-col"><span class="tb-n">1,177</span><i style="height:79%"></i><span class="tb-m">4월</span></div><div class="tb-col"><span class="tb-n">1,154</span><i style="height:77%"></i><span class="tb-m">5월</span></div><div class="tb-col"><span class="tb-n">1,076</span><i style="height:72%"></i><span class="tb-m">6월</span></div><div class="tb-col"><span class="tb-n">950</span><i style="height:64%"></i><span class="tb-m">7월</span></div><div class="tb-col"><span class="tb-n">766</span><i style="height:51%"></i><span class="tb-m">8월</span></div><div class="tb-col part"><span class="tb-n">787</span><i style="height:53%"></i><span class="tb-m">9월</span></div><div class="tb-col part"><span class="tb-n">235</span><i style="height:16%"></i><span class="tb-m">10월</span></div></div><p class="note">다달이 매매 거래량(계약월 기준 · 해제 제외). 흐린 막대는 아직 신고가 다 들어오지 않은 달입니다 — 신고는 계약일부터 30일 안에 합니다.</p><div class="tr-grid"><div class="tr-box"><h4>최근 석 달<small>6~8월 · 앞 기간 3~5월</small></h4><dl><div><dt>거래량</dt><dd>2,792건 <b class="down">-24.4%</b><small>앞 기간 3,695건</small></dd></div><div><dt>84㎡ 평균</dt><dd>4억 3,375만원 <b class="up">+2.5%</b><small>앞 기간 4억 2,335만원</small></dd></div></dl></div><div class="tr-box"><h4>올해와 작년<small>2026년 1~8월 · 앞 기간 2025년 같은 달</small></h4><dl><div><dt>거래량</dt><dd>9,206건 <b class="down">-8.5%</b><small>앞 기간 10,056건</small></dd></div><div><dt>84㎡ 평균</dt><dd>4억 3,336만원 <b class="up">+7.5%</b><small>앞 기간 4억 301만원</small></dd></div></dl></div></div><div class="tr-grid"><div class="tr-tbl"><h4>평균 거래가가 오른 단지</h4><div class="tr-scroll"><table><thead><tr><th>단지 · 평형</th><th class="r">앞 석 달 평균</th><th class="r">최근 석 달 평균</th><th class="r">차이</th></tr></thead><tbody><tr><td>현대패밀리명덕2<small>동구 서부동 · 23평</small></td><td class="r">1억 2,343만원<small>7건</small></td><td class="r">1억 4,500만원<small>3건</small></td><td class="r"><b class="up">+17.5%</b></td></tr><tr><td>성안금호타운<small>중구 성안동 · 29평</small></td><td class="r">1억 8,417만원<small>6건</small></td><td class="r">2억 1,100만원<small>4건</small></td><td class="r"><b class="up">+14.6%</b></td></tr><tr><td>경동우신알프스타운<small>울주군 삼남읍 교동리 · 21평</small></td><td class="r"> 9,690만원<small>5건</small></td><td class="r">1억 1,017만원<small>3건</small></td><td class="r"><b class="up">+13.7%</b></td></tr><tr><td>서동현대<small>중구 서동 · 19평</small></td><td class="r">1억 850만원<small>6건</small></td><td class="r">1억 2,325만원<small>4건</small></td><td class="r"><b class="up">+13.6%</b></td></tr><tr><td>신성미소지움2단지<small>남구 신정동 · 33평</small></td><td class="r">5억 4,267만원<small>3건</small></td><td class="r">6억 300만원<small>6건</small></td><td class="r"><b class="up">+11.1%</b></td></tr></tbody></table></div></div><div class="tr-tbl"><h4>평균 거래가가 내린 단지</h4><div class="tr-scroll"><table><thead><tr><th>단지 · 평형</th><th class="r">앞 석 달 평균</th><th class="r">최근 석 달 평균</th><th class="r">차이</th></tr></thead><tbody><tr><td>현대패밀리서부<small>동구 서부동 · 19평</small></td><td class="r"> 8,733만원<small>15건</small></td><td class="r"> 7,776만원<small>19건</small></td><td class="r"><b class="down">-11.0%</b></td></tr><tr><td>다운<small>중구 다운동 · 19평</small></td><td class="r"> 9,450만원<small>4건</small></td><td class="r"> 8,420만원<small>5건</small></td><td class="r"><b class="down">-10.9%</b></td></tr><tr><td>매곡현대아파트(101~106동)<small>북구 매곡동 · 19평</small></td><td class="r"> 9,293만원<small>10건</small></td><td class="r"> 8,350만원<small>4건</small></td><td class="r"><b class="down">-10.1%</b></td></tr><tr><td>금강<small>동구 화정동 · 21평</small></td><td class="r"> 9,880만원<small>5건</small></td><td class="r"> 8,933만원<small>3건</small></td><td class="r"><b class="down">-9.6%</b></td></tr><tr><td>두산위브<small>울주군 언양읍 서부리 · 33평</small></td><td class="r">3억 6,400만원<small>3건</small></td><td class="r">3억 2,925만원<small>4건</small></td><td class="r"><b class="down">-9.5%</b></td></tr></tbody></table></div></div></div><p class="note">단지 비교는 <b>같은 단지 · 같은 평형</b>끼리 최근 90일과 그 앞 90일의 평균을 견준 것입니다(양쪽 모두 3건 이상 · 직거래와 해제 거래 제외 · 견줄 수 있는 182개 단지·평형 가운데). 층과 동, 수리 상태에 따라 값이 달라 <b>그 단지 시세가 그만큼 올랐거나 내렸다는 뜻은 아닙니다.</b> 84㎡ 평균도 그 기간에 거래된 단지 구성에 따라 달라집니다. 출처: 국토교통부 아파트 매매 실거래가.</p></div>
     <div class="calrow">
       <div class="cal" id="cal" aria-label="실거래 공개일 달력"></div>
