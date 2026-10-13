@@ -47,6 +47,7 @@ figure{margin:16px -8px}figure img{width:100%;height:auto;border-radius:8px;disp
 .gnb a{padding:11px 12px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;border-bottom:3px solid transparent}
 .gnb a.on{color:var(--accent);border-bottom-color:var(--accent)}
 .lead{color:var(--ink-2);margin:0 0 14px}
+.crumb{margin:0 0 10px}.crumb a{display:inline-block;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--surface);text-decoration:none;font-weight:700;font-size:14px}
 .zgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:8px}
 .zcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink)}
 .zcard:hover{border-color:var(--accent)}
