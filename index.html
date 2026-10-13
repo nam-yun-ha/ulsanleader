@@ -384,6 +384,11 @@ nav.menu a.on{color:var(--accent);font-weight:700}
 .lesson.case .no{font-size:13px;letter-spacing:-.2px}
 .dfull{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-top:12px}
 #dall{margin-bottom:6px}
+/* 입주예정 — 구별 · 연도별 세대수 */
+.msum{margin:0 0 14px}.msum .mline{margin:0 0 8px;font-size:16px}.msum .mline small{color:var(--ink-2)}
+.msum-t{min-width:0!important;font-size:14px}.msum-t th,.msum-t td{padding:7px 10px}
+.msum-t .r{text-align:right}.msum-t td small{display:block;font-size:11.5px;color:var(--ink-2);font-weight:500}
+.msum-t .on{background:var(--accent-soft)}.msum-t tr.tot td{border-top:2px solid var(--line)}
 /* 달력 옆에 「그날 전체 보기」 — 옆이 비어 보여서 (2026-10-13 대표님 「달력 옆으로 · 옆이 너무 비어 있는 거 같아서」). 표를 펴면 한 줄 전체를 쓴다 */
 .calrow{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:18px;align-items:start}
 .calrow .cal{max-width:none}
@@ -498,6 +503,7 @@ tr.stop td{color:var(--ink-2)}
       <div><h2>울산 입주예정 아파트</h2><p>입주 순서대로 · 세대수는 청약홈 <b>일반분양</b> 기준입니다(조합원 몫 제외). <a href="apt/#movein"><b>단지별 페이지로 보기 →</b></a></p></div>
       <div class="filters gu-filter" role="group" aria-label="입주예정 구 필터" data-for="movein"></div>
     </div>
+    <div id="movein-sum" class="msum"></div>
     <div class="tablebox">
       <table class="num">
         <thead><tr><th>입주예정</th><th>단지</th><th>위치</th><th class="r">일반분양</th><th>평형</th><th>분양가</th><th>시공</th><th>상태</th></tr></thead>
@@ -1060,7 +1066,22 @@ const STAGES = ["사전타당성", "추진위 승인", "정비구역 지정", "�
 const pick = {movein: "전체", redev: "전체", trade: "전체"};
 const inGu = (g, key) => pick[key] === "전체" || g === pick[key];
 
+/* 입주예정 맨 위 — 구별 · 연도별 세대수 (2026-10-13 대표님 「첫 줄에 구별로 총 세대수 그리고 년도별로 세대수까지」)
+   세대수는 표와 같은 청약홈 일반분양 기준. 고른 구의 칸을 진하게 보여 준다. */
+function renderMoveinSum(){
+  const G5 = GU.filter(g => g !== "전체"), all = DATA.movein, sel = pick.movein || "전체";
+  const years = [...new Set(all.map(m => m.ym.slice(0, 4)))].sort();
+  const sum = (f) => all.filter(f).reduce((a, m) => a + (m.tot || 0), 0), cnt = (f) => all.filter(f).length;
+  const n = v => v ? v.toLocaleString() : "—";
+  const head = `<tr><th>입주 연도</th>${G5.map(g => `<th class="r${sel === g ? " on" : ""}">${g}</th>`).join("")}<th class="r${sel === "전체" ? " on" : ""}">합계</th></tr>`;
+  const body = years.map(y => `<tr><td>${y}년</td>${G5.map(g => `<td class="r${sel === g ? " on" : ""}">${n(sum(m => m.gu === g && m.ym.slice(0, 4) === y))}</td>`).join("")}<td class="r${sel === "전체" ? " on" : ""}"><b>${n(sum(m => m.ym.slice(0, 4) === y))}</b></td></tr>`).join("");
+  const foot = `<tr class="tot"><td>합계</td>${G5.map(g => `<td class="r${sel === g ? " on" : ""}"><b>${n(sum(m => m.gu === g))}</b><small>${cnt(m => m.gu === g)}곳</small></td>`).join("")}<td class="r${sel === "전체" ? " on" : ""}"><b>${n(sum(() => true))}</b><small>${all.length}곳</small></td></tr>`;
+  const f = m => sel === "전체" || m.gu === sel;
+  document.getElementById("movein-sum").innerHTML = `<p class="mline"><b>${sel === "전체" ? "울산 전체" : sel}</b> 입주예정 <b>${cnt(f)}곳 · ${sum(f).toLocaleString()}세대</b> <small>(일반분양 기준)</small></p>
+    <div class="tablebox"><table class="num msum-t"><thead>${head}</thead><tbody>${body}${foot}</tbody></table></div>`;
+}
 function renderMovein(){
+  renderMoveinSum();
   const rows = DATA.movein.filter(m => inGu(m.gu, "movein"));
   let prevY = "";
   document.getElementById("movein-rows").innerHTML = rows.length ? rows.map((m, i) => {
