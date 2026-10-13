@@ -26,7 +26,8 @@ document.getElementById("dn").textContent=n.toLocaleString("ko-KR")+"곳";}
 q.addEventListener("input",draw);
 [].forEach.call(document.querySelectorAll("#dg button"),function(b){b.addEventListener("click",function(){g=b.dataset.g;[].forEach.call(document.querySelectorAll("#dg button"),function(x){x.setAttribute("aria-pressed",x===b);});draw();});});
 var m=/[?&]q=([^&]*)/.exec(location.search);if(m){try{q.value=decodeURIComponent(m[1].replace(/[+]/g," "));}catch(e){}}
-draw();if(m&&q.value)q.scrollIntoView({block:"center"});})();
+var mg=/[?&]g=([^&]*)/.exec(location.search);if(mg){try{var gg=decodeURIComponent(mg[1]);[].forEach.call(document.querySelectorAll("#dg button"),function(b){if(b.dataset.g===gg){g=gg;[].forEach.call(document.querySelectorAll("#dg button"),function(x){x.setAttribute("aria-pressed",x===b);});m=m||1;}});}catch(e){}}
+draw();if(m)q.scrollIntoView({block:"start"});})();
 </script></main>
 <section class="office" aria-label="사무소 안내와 상담 남기기"><div class="in">
   <div><h3>울산부동산리더공인중개사사무소</h3>
