@@ -402,8 +402,9 @@ nav.menu a.on{color:var(--accent);font-weight:700}
 /* 달력 옆에 「그날 전체 보기」 — 옆이 비어 보여서 (2026-10-13 대표님 「달력 옆으로 · 옆이 너무 비어 있는 거 같아서」). 표를 펴면 한 줄 전체를 쓴다 */
 .calrow{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:18px;align-items:start}
 .calrow .cal{max-width:none}
-.calrow:has(#dall details[open]),.calrow:has(#dall [aria-expanded="true"]){grid-template-columns:minmax(0,1fr)}
-.calrow:has(#dall details[open]) .cal,.calrow:has(#dall [aria-expanded="true"]) .cal{max-width:420px}
+/* 펴도 달력 옆에 그대로 둔다 (대표님 「옆에 있었는데 누르고 나면 다시 밑으로 내려가네」) — 길면 그 칸 안에서 굴린다 */
+@media (min-width:861px){#dall details[open]{max-height:620px;overflow-y:auto}
+  #dall details[open] > summary{position:sticky;top:0;background:var(--surface);z-index:1}}
 @media (max-width:860px){.calrow{grid-template-columns:minmax(0,1fr)}.calrow .cal{max-width:420px}}
 .dfull>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;font-weight:700}
 .dfull>summary::-webkit-details-marker{display:none}.dfull .arrow{color:var(--ink-2);font-size:13px}
