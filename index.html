@@ -867,6 +867,10 @@ document.querySelectorAll("#bunyang .filters button").forEach(b => {
     f = b.dataset.f; shown = 20; draw();
   }));
   document.getElementById("feed-more").addEventListener("click", () => { shown += 20; draw(); });
+  document.querySelectorAll("#feed-filter button").forEach(b => {                       /* 단추마다 건수 (2026-10-13 대표님) */
+    const n = all.filter(x => b.dataset.f === "all" || x.k === b.dataset.f).length;
+    b.insertAdjacentHTML("beforeend", ` <span class="fn">${n}</span>`);
+  });
   draw();
 })();
 
@@ -1061,7 +1065,9 @@ function renderRedev(){
 
 document.querySelectorAll(".gu-filter").forEach(box => {
   const key = box.dataset.for;
-  box.innerHTML = GU.map(g => `<button data-g="${g}" aria-pressed="${g === "전체"}">${g}</button>`).join("");
+  const src = key === "movein" ? DATA.movein : key === "redev" ? DATA.zones : null;      /* 단추마다 건수 (2026-10-13 대표님 「갯수 없으니까 정리 안 해놓은 느낌」) */
+  const cnt = g => src ? ` <span class="fn">${src.filter(x => g === "전체" || x.gu === g).length}</span>` : "";
+  box.innerHTML = GU.map(g => `<button data-g="${g}" aria-pressed="${g === "전체"}">${g}${cnt(g)}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
     box.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
     pick[key] = b.dataset.g;
