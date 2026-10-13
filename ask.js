@@ -6,7 +6,7 @@
    설문지 → 대표님 구글 시트 + 메일 알림 + (집 컴퓨터가 읽어) 카톡. 연락처를 받으므로 동의 체크가 있어야 보내진다(about.html 처리방침).
    「문자로 · 카톡으로 보내기」는 그대로 — 손님 휴대폰 앱에 글을 채워 손님이 직접 보낸다(그쪽은 저장하지 않는다).
    설문지 칸 번호(entry.N)는 설문지 질문을 지웠다 다시 만들면 바뀐다 — 그때는 FORM 을 고친다.
-   쪽에 <meta name="ask-name" content="단지 이름"> 이 있으면 「단지명 또는 주소」 칸에 미리 채운다.
+   쪽에 <meta name="ask-name" content="단지 이름"> 이 있으면 「단지명 · 주소」 칸에 미리 채운다.
    주소 끝이 #ask-sell 이면 「집 내놓기」, #ask-buy 면 「집 구하기」가 열린 채로 그 자리로 간다. */
 (function () {
   var slot = document.getElementById("ask-slot");
@@ -46,7 +46,7 @@
     + '<h3>상담 남기기</h3>'
     + '<div class="tabs" role="group" aria-label="상담 종류"><button type="button" data-t="buy" aria-pressed="true">집 구하기</button><button type="button" data-t="sell" aria-pressed="false">집 내놓기</button></div>'
     + '<div><span class="lb">거래 방식 <small>(여러 개 골라도 됩니다)</small></span><div class="chips" id="askf-way"></div></div>'
-    + '<div><label class="lb" for="askf-where">단지명 또는 주소</label><input id="askf-where" type="text" maxlength="60" placeholder="예: 신정현대홈타운, 남구 야음동"></div>'
+    + '<div><label class="lb" for="askf-where">단지명 · 주소</label><input id="askf-where" type="text" maxlength="60" placeholder="예: 신정현대홈타운 101동 · 남구 야음동 123-4"></div>'
     + '<div><span class="lb">거래 희망 시기</span><div class="chips" id="askf-when"></div></div>'
     + '<div class="row"><div><label class="lb" for="askf-name">성함</label><input id="askf-name" type="text" autocomplete="name" maxlength="20"></div>'
     + '<div><label class="lb" for="askf-tel">연락처</label><input id="askf-tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" maxlength="20"></div></div>'
