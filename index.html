@@ -309,6 +309,27 @@ dialog.zdlg::backdrop{background:rgba(10,20,18,.55)}
 .dbox td{white-space:normal;word-break:keep-all;overflow-wrap:anywhere}
 .dbox td.r{white-space:nowrap;width:1%;vertical-align:top}
 .dbox td.rk{vertical-align:top}
+/* 울산 아파트 시장 흐름 (2026-10-13) — 실거래 칸 맨 위 · 처음부터 HTML 에 들어 있다 */
+.trend{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:0 0 22px;display:grid;gap:14px}
+.trend h3{margin:0;font-size:18px} .trend h3 small{font-weight:500;font-size:12.5px;color:var(--ink-2);margin-left:8px}
+.trend .note{margin:0}
+.tr-bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:150px}
+.tb-col{display:grid;grid-template-rows:auto 1fr auto;height:100%;text-align:center;font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:0}
+.tb-col i{display:block;align-self:end;background:var(--accent);border-radius:4px 4px 0 0;min-height:3px}
+.tb-col.part i{background:var(--done);opacity:.55}
+.tb-n{font-weight:700;color:var(--ink)} .tb-m{padding-top:3px}
+.tr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.tr-box,.tr-tbl{border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.tr-box h4,.tr-tbl h4{margin:0 0 8px;font-size:14.5px} .tr-box h4 small{display:block;font-weight:500;font-size:12px;color:var(--ink-2)}
+.tr-box dl{margin:0;display:grid;gap:8px} .tr-box dl div{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.tr-box dt{color:var(--ink-2);font-size:13px} .tr-box dd{margin:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.tr-box dd small,.tr-tbl td small{display:block;font-weight:500;font-size:11.5px;color:var(--ink-2)}
+.trend b.up{color:var(--live)} .trend b.down{color:var(--down)}
+.tr-scroll{overflow-x:auto} .tr-tbl table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.tr-tbl th{font-size:11.5px;color:var(--ink-2);font-weight:500;text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tr-tbl td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top;word-break:keep-all}
+.tr-tbl tr:last-child td{border-bottom:0} .tr-tbl .r{text-align:right;white-space:nowrap}
+@media (max-width:560px){.tb-n{font-size:9.5px;letter-spacing:-.5px}.tr-bars{gap:3px;height:130px}.trend{padding:14px 12px}}
 /* 전체 글 목차 — 처음부터 HTML 에 들어 있는 칸 (2026-10-13 애드센스 「가치가 별로 없는 콘텐츠」 대응) */
 .ix{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-top:10px}
 .ix summary{cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -582,6 +603,7 @@ tr.stop td{color:var(--ink-2)}
 <section class="block alt" id="trade">
   <div class="wrap">
     <div class="head"><div><h2>울산 실거래 — 날짜별</h2><p>국토교통부에 실거래가 공개된 날마다 국민평형(31~35평)·실속형(21~29평)·분양권·전세를 10개씩 모았습니다. 매일 아침 카드뉴스와 같은 자료입니다.</p></div></div>
+    <!--TREND-->
     <div class="cal" id="cal" aria-label="실거래 공개일 달력"></div>
     <p class="note" id="daysum" style="margin:10px 0 0"></p>
     <div id="dall"></div>
