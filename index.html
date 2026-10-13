@@ -461,12 +461,15 @@ tr.stop td{color:var(--ink-2)}
 <section class="block" id="bunyang">
   <div class="wrap">
     <div class="head">
-      <div><h2>울산 분양소식</h2><p>청약홈 모집공고 기준 · 평당가는 주택형별 최고 분양가의 공급면적 가중 평균입니다. <a href="apt/"><b>단지별 페이지로 보기(청약 결과 · 분양권 실거래 포함) →</b></a></p></div>
+      <div><h2>울산 분양소식</h2><p>청약홈 모집공고 기준 · 평당가는 주택형별 최고 분양가의 공급면적 가중 평균입니다. <a href="apt/"><b>단지별 페이지로 보기(청약 결과 · 분양권 실거래 포함) →</b></a> · <a href="apt/#past"><b>지난 공고 전체(2020년부터) →</b></a></p></div>
       <div class="filters" role="group" aria-label="분양 상태 필터">
         <button data-f="all" aria-pressed="true">전체</button>
-        <button data-f="live" aria-pressed="false">청약중</button>
-        <button data-f="soon" aria-pressed="false">청약예정</button>
-        <button data-f="done" aria-pressed="false">접수 마감</button>
+        <button data-f="청약 예정" aria-pressed="false">청약 예정</button>
+        <button data-f="청약 접수 중" aria-pressed="false">청약 중</button>
+        <button data-f="당첨자 발표 대기" aria-pressed="false">발표 대기</button>
+        <button data-f="계약 예정" aria-pressed="false">계약 예정</button>
+        <button data-f="계약 중" aria-pressed="false">계약 중</button>
+        <button data-f="접수 마감" aria-pressed="false">접수 마감</button>
       </div>
     </div>
     <div class="grid" id="cards"></div>
@@ -818,7 +821,7 @@ function plan(i){
   return `<svg viewBox="0 0 300 110" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="100" width="300" height="10" fill="var(--accent)" opacity=".25"/>${r}</svg>`;
 }
 function renderCards(f){
-  const list = DATA.bunyang.map((d,i) => ({d,i})).filter(o => f === "all" || o.d.s === f);
+  const list = DATA.bunyang.map((d,i) => ({d,i})).filter(o => f === "all" || o.d.stage === f);   /* 단계별 (2026-10-13 대표님 「계약 예정 · 계약 중 이렇게 세부적으로」) */
   document.getElementById("cards").innerHTML = list.length ? list.map(({d,i}) => `
     <article class="card apt" data-i="${i}" tabindex="0" role="button" aria-label="${esc(d.name)} 자세히 보기"><div class="plan">${plan(i)}</div><div class="body">
       <div class="chips"><span class="status ${statOf(d)[1]}">${esc(statOf(d)[0])}</span><span class="kind">${esc(d.kind)}</span></div>
@@ -843,7 +846,7 @@ document.querySelectorAll("#bunyang .filters button").forEach(b => b.addEventLis
 renderCards("all");
 /* 거르기 단추에 건수 — 「전체 9 · 청약중 0 · 청약예정 1 · 접수 마감 8」 (2026-10-13 대표님 「폴더 안에 갯수도 있으면 좋겠네」) */
 document.querySelectorAll("#bunyang .filters button").forEach(b => {
-  const n = DATA.bunyang.filter(d => b.dataset.f === "all" || d.s === b.dataset.f).length;
+  const n = DATA.bunyang.filter(d => b.dataset.f === "all" || d.stage === b.dataset.f).length;
   b.insertAdjacentHTML("beforeend", ` <span class="fn">${n}</span>`);
 });
 
