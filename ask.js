@@ -31,6 +31,10 @@
     + ".askf .send button.alt{background:var(--surface,#fff);color:var(--accent,#0E5E57)}"
     + ".askf .agree{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink,#16211F);cursor:pointer}"
     + ".askf .agree input{width:18px;height:18px;margin:2px 0 0;flex:none}"
+    + ".askdone{background:var(--surface,#fff);border:2px solid var(--accent,#0E5E57);border-radius:12px;padding:28px 20px;text-align:center;display:grid;gap:10px;color:var(--ink,#16211F);scroll-margin-top:120px}"
+    + ".askdone .ck{font-size:44px;line-height:1}.askdone h3{margin:0;font-size:22px}.askdone p{margin:0;font-size:15px;color:var(--ink-2,#4A5754)}"
+    + ".askdone .sum{text-align:left;background:var(--ground,#F3F5F4);border-radius:8px;padding:12px 14px;font-size:14px;white-space:pre-line;color:var(--ink,#16211F)}"
+    + ".askdone button{justify-self:center;font:inherit;font-weight:700;font-size:15px;padding:10px 18px;border-radius:8px;border:1px solid var(--line,#DCE2E0);background:var(--surface,#fff);color:var(--ink,#16211F);cursor:pointer}"
     + ".askf .msg{font-weight:700;color:var(--accent,#0E5E57);min-height:1.2em}";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -114,8 +118,16 @@
     var body = Object.keys(ENTRY).map(function (k) { return "entry." + ENTRY[k] + "=" + encodeURIComponent(v[k] || ""); }).join("&");
     var b = $("askf-go"); b.disabled = true; say("접수하는 중입니다…");
     fetch(FORM, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body }).then(function () {
-      sent = Date.now(); b.disabled = false;
-      say("접수되었습니다. 확인하는 대로 " + tel + " 로 연락드리겠습니다. 급하시면 052-254-4988 로 전화 주세요.");
+      sent = Date.now(); b.disabled = false; say("");
+      /* 접수 뒤에는 양식을 접고 「접수되었습니다」 화면으로 바꾼다 (2026-10-14 대표님 「누르고 그다음 화면 안 넘어가는데」) */
+      var d = document.createElement("div"); d.className = "askdone"; d.setAttribute("role", "status");
+      var sum = [v.kind + (v.way ? " · " + v.way : ""), v.where, v.when ? "희망 시기 " + v.when : "", (v.name ? v.name + " · " : "") + v.tel].filter(Boolean).join("\n");
+      d.innerHTML = '<div class="ck">✅</div><h3>접수되었습니다</h3><p>확인하는 대로 적어 주신 번호로 연락드리겠습니다.<br>급하시면 ☎ 052-254-4988 로 전화 주세요.</p><div class="sum"></div><button type="button">다른 문의 남기기</button>';
+      d.querySelector(".sum").textContent = sum;
+      var f = $("askf"); f.hidden = true; f.style.display = "none"; slot.appendChild(d); d.scrollIntoView({ block: "center" });
+      d.querySelector("button").addEventListener("click", function () {
+        d.remove(); f.hidden = false; f.style.display = ""; $("askf-memo").value = ""; $("askf-ok").checked = false; f.scrollIntoView();
+      });
     }, function () {
       b.disabled = false;
       say("접수가 되지 않았습니다. 아래 문자 · 카톡 단추로 보내시거나 052-254-4988 로 전화 주세요.");
