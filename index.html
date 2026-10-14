@@ -1672,8 +1672,12 @@ document.getElementById("zd-body").addEventListener("click", e => {
     const words = raw.split(/\s+/).map(norm).filter(Boolean);
     const onlyCho = w => /^[ㄱ-ㅎ]+$/.test(w);
     hits = idx.filter(x => words.every(w => onlyCho(w) ? x.c.includes(w) : x.h.includes(w)));
+    if (!hits.length && !words.some(onlyCho)) {        /* 띄어쓰기 없이 「다운동한양립스」처럼 넣어도 — 두 글자씩 70% 넘게 겹치면 보여 준다 */
+      const tw0 = words.join(""), bg = []; for (let i = 0; i + 1 < tw0.length; i++) bg.push(tw0.slice(i, i + 2));
+      if (bg.length >= 2) hits = idx.map(x => [x, bg.filter(b => x.h.includes(b)).length / bg.length]).filter(a => a[1] >= 0.7).sort((a, b) => b[1] - a[1]).map(a => a[0]);
+    }
     // 제목에 들어간 것을 먼저
-    const tw = words.join(""), KO = ["재개발", "분양", "입주예정", "가로주택", "소규모재건축", "실거래", "공부방", "판례", "부동산정보", "소식"];
+    const tw = words.join(""), KO = ["단지", "재개발", "분양", "입주예정", "가로주택", "소규모재건축", "실거래", "공부방", "판례", "부동산정보", "소식"];
     const score = x => {                             /* 제목이 검색어로 시작 3 · 제목에 있음 2 · 나머지 0 */
       const tt = norm(x.title), tc = cho(tt), s = onlyCho(tw) ? tc : tt;
       if (!s.includes(tw)) return 0;
@@ -1683,9 +1687,22 @@ document.getElementById("zd-body").addEventListener("click", e => {
     res.innerHTML = hits.length ? hits.slice(0, 40).map((x, n) =>
       `<li><button type="button" data-n="${n}"><span class="sk">${esc(x.k)}</span><span><span class="st">${esc(x.title)}</span><span class="ss">${esc(x.sub)}</span></span></button></li>`).join("")
       + (hits.length > 40 ? `<li class="shint">${hits.length}건 중 40건만 보여 드립니다. 한 단어 더 넣어 보세요.</li>` : "")
-      : `<li class="shint">「${esc(raw)}」로 찾은 것이 없습니다. 짧게 넣거나 다른 말로 찾아보세요.</li>`;
+      : `<li class="shint">「${esc(raw)}」로 찾은 것이 없습니다. 짧게 넣거나 다른 말로 찾아보세요. <a href="danji/?q=${encodeURIComponent(raw)}">단지 찾기에서 비슷한 이름 보기 →</a></li>`;
   }
-  function open() { sd.showModal(); q.focus(); q.select(); run(); }
+  /* 아파트 단지 2천여 곳도 찾는다 — danji/q.json 을 처음 열 때 한 번 받는다 (2026-10-14 대표님 「다운동 한양립스 검색으로 하니까 안 찾아져」) */
+  let djLoaded = false;
+  function loadDanji() {
+    if (djLoaded) return; djLoaded = true;
+    fetch("danji/q.json").then(r => r.ok ? r.json() : []).then(list => {
+      list.forEach(([href, name, ad, qk]) => {
+        const url = href.startsWith("../") ? href.slice(3) : "danji/" + href;
+        const h = norm(name + " " + ad + " " + qk);
+        idx.push({k: "단지", title: name, sub: ad + " · 단지 실거래 · 시세", h, c: cho(h), go: () => { location.href = url; }});
+      });
+      if (sd.open) run();
+    }, () => { djLoaded = false; });
+  }
+  function open() { sd.showModal(); q.focus(); q.select(); loadDanji(); run(); }
   document.getElementById("search-open").addEventListener("click", open);
   document.getElementById("search-close").addEventListener("click", () => sd.close());
   sd.addEventListener("click", e => { if (e.target === sd) sd.close(); });
