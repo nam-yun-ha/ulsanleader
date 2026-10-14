@@ -31,6 +31,7 @@
     + ".askf .send button.alt{background:var(--surface,#fff);color:var(--accent,#0E5E57)}"
     + ".askf .agree{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink,#16211F);cursor:pointer}"
     + ".askf .agree input{width:18px;height:18px;margin:2px 0 0;flex:none}"
+    + ".askdone .bk{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.askdone .bk .prev{font-weight:800}.askdone .bk .home{display:inline-flex;align-items:center;padding:10px 16px;border-radius:10px;border:1px solid var(--line,#DCE2E0);color:inherit;text-decoration:none;font-weight:700}"
     + ".askdone{background:var(--surface,#fff);border:2px solid var(--accent,#0E5E57);border-radius:12px;padding:28px 20px;text-align:center;display:grid;gap:10px;color:var(--ink,#16211F);scroll-margin-top:120px}"
     + ".askdone .ck{font-size:44px;line-height:1}.askdone h3{margin:0;font-size:22px}.askdone p{margin:0;font-size:15px;color:var(--ink-2,#4A5754)}"
     + ".askdone .sum{text-align:left;background:var(--ground,#F3F5F4);border-radius:8px;padding:12px 14px;font-size:14px;white-space:pre-line;color:var(--ink,#16211F)}"
@@ -122,10 +123,12 @@
       /* 접수 뒤에는 양식을 접고 「접수되었습니다」 화면으로 바꾼다 (2026-10-14 대표님 「누르고 그다음 화면 안 넘어가는데」) */
       var d = document.createElement("div"); d.className = "askdone"; d.setAttribute("role", "status");
       var sum = [v.kind + (v.way ? " · " + v.way : ""), v.where, v.when ? "희망 시기 " + v.when : "", (v.name ? v.name + " · " : "") + v.tel].filter(Boolean).join("\n");
-      d.innerHTML = '<div class="ck">✅</div><h3>접수되었습니다</h3><p>확인하는 대로 적어 주신 번호로 연락드리겠습니다.<br>급하시면 ☎ 052-254-4988 로 전화 주세요.</p><div class="sum"></div><button type="button">다른 문의 남기기</button>';
+      d.innerHTML = '<div class="ck">✅</div><h3>접수되었습니다</h3><p>확인하는 대로 적어 주신 번호로 연락드리겠습니다.<br>급하시면 ☎ 052-254-4988 로 전화 주세요.</p><div class="sum"></div><div class="bk"><button type="button" class="prev">← 보던 화면으로</button><button type="button" class="again">다른 문의 남기기</button><a class="home" href="/">🏠 처음으로</a></div>';
       d.querySelector(".sum").textContent = sum;
       var f = $("askf"); f.hidden = true; f.style.display = "none"; slot.appendChild(d); d.scrollIntoView({ block: "center" });
-      d.querySelector("button").addEventListener("click", function () {
+      /* 접수 뒤 보던 화면으로 (2026-10-14 대표님 「집 내놓기 · 집 구하기 하고 나서 이전 화면으로 돌아갈 수 있게」) */
+      d.querySelector(".prev").addEventListener("click", goBack);
+      d.querySelector(".again").addEventListener("click", function () {
         d.remove(); f.hidden = false; f.style.display = ""; $("askf-memo").value = ""; $("askf-ok").checked = false; f.scrollIntoView();
       });
     }, function () {
@@ -133,6 +136,13 @@
       say("접수가 되지 않았습니다. 아래 문자 · 카톡 단추로 보내시거나 052-254-4988 로 전화 주세요.");
     });
   });
+  var startY = 0;
+  function goBack() {
+    var ref = document.referrer, same = ref && ref.indexOf(location.origin) === 0 && ref.split("#")[0] !== location.href.split("#")[0];
+    if (/^#ask-/.test(location.hash) || same) { history.back(); return; }   // 「이 단지 매물 접수」 · 다른 쪽에서 왔으면 그 쪽으로
+    window.scrollTo({ top: startY, behavior: "smooth" });                     // 같은 쪽 아래로 내려온 것이면 읽던 자리로
+  }
+  window.addEventListener("scroll", function () { var r = slot.getBoundingClientRect(); if (r.top > window.innerHeight) startY = window.scrollY || 0; }, { passive: true });
   var phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   $("askf-sms").addEventListener("click", function () {
     var t = text(); if (!t) return;
