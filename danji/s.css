@@ -104,6 +104,9 @@ h2{font-size:19px;margin:28px 0 8px}
 .majors div{flex:0 0 190px;scroll-snap-align:start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);display:grid;gap:2px}
 .majors b a{text-decoration:none;color:var(--ink);font-size:14.5px}.majors small{color:var(--ink-2);font-size:12px;line-height:1.35}
 .majors .go{font-weight:700;font-size:12.5px;text-decoration:none;margin-top:2px}
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.plans figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.plans img{width:100%;height:auto;display:block}.plans figcaption{padding:8px 10px;font-weight:700;text-align:center;border-top:1px solid var(--line);color:#16211F}
 .majhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:14px 0 6px}.majhead h2{margin:0;font-size:15px;white-space:nowrap}.majhead h2 small{font-size:12px}.majhead>small{color:var(--ink-2);font-size:12px;white-space:nowrap}
 .rk3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
 .rk3 div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);display:grid;gap:2px}
