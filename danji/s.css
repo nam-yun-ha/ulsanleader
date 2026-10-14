@@ -114,6 +114,8 @@ h2{font-size:19px;margin:28px 0 8px}
 .dj-lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2);margin:4px 0 12px}
 .dj-lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 .dj-lg i.ln{width:22px;height:0;border-top:2px dashed var(--ink);border-radius:0;vertical-align:3px}
+.aer{margin:12px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}.aer img{width:100%;height:auto;display:block;max-height:420px;object-fit:cover}
+.aer figcaption{padding:8px 12px;font-size:12.5px;color:var(--ink-2)}
 .dcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin:12px 0 18px}
 .dcards a{display:grid;grid-template-rows:auto 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);text-decoration:none;color:var(--ink);transition:transform .12s,box-shadow .12s}
 .dcards a:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.12)}.dcards a[hidden]{display:none}
