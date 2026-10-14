@@ -336,6 +336,7 @@ nav.menu a.on{color:var(--accent);font-weight:700}
 .smap a path{transition:opacity .12s;cursor:pointer}.smap a:hover path{opacity:.8}
 .jump a:nth-child(4){background:var(--surface);color:var(--ink)}.jump a:nth-child(4) i{color:var(--accent)}
 /* 따로 페이지로 가는 큰 칸 (2026-10-13) — 글 속 링크는 안 보여서 */
+.gohome{position:fixed;left:14px;bottom:16px;z-index:40;padding:11px 15px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 6px 16px rgba(0,0,0,.28)}
 .hd-find{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px 36px;align-items:center;background:var(--ink);color:#fff;border-radius:16px;padding:26px 28px;margin:0 0 18px}
 .hd-find h2{margin:0 0 6px;font-size:26px;color:#fff}.hd-find p{margin:0;color:#C9D3D0;font-size:14.5px}
 .hd-s{display:flex;gap:8px}.hd-s input{flex:1;min-width:0;font:inherit;font-size:16px;padding:13px 14px;border:0;border-radius:10px;background:#fff;color:#16211F}
@@ -771,6 +772,7 @@ tr.stop td{color:var(--ink-2)}
   </div>
 </section>
 
+<a class="gohome" href="#start" aria-label="처음 화면으로">🏠 처음으로</a>
 <footer>
   <div class="wrap">
     <dl>
