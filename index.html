@@ -294,6 +294,10 @@ dialog.zdlg::backdrop{background:rgba(10,20,18,.55)}
 .cal-h b{font-size:17px}
 .cal-h button{font:inherit;font-size:16px;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
 .cal-h button:disabled{opacity:.3;cursor:default}
+/* 연도·월 고르기 (2026-10-20 대표님) */
+.cal-pick{display:flex;gap:6px;align-items:center}
+.cal-pick select{font:inherit;font-size:16px;font-weight:700;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+.cal-pick select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
 .cal-g .wd{font-size:12px;color:var(--ink-2);padding:2px 0}
 .cal-g .wd.sun,.cal-g .sun .dn{color:#C0392B} .cal-g .wd.sat,.cal-g .sat .dn{color:#2E5DA8}
@@ -1045,7 +1049,17 @@ function renderCal() {
   }
   document.getElementById("cal").innerHTML =
     `<div class="cal-h"><button type="button" data-mv="-1" ${mi <= 0 ? "disabled" : ""} aria-label="이전 달">◀</button>
-       <b>${y}년 ${m}월</b>
+       <span class="cal-pick">
+         <select id="caly" aria-label="연도 고르기">${
+           [...new Set(mons.map(x => x.slice(0, 4)))].sort().reverse()
+             .map(yy => `<option value="${yy}"${yy === String(y) ? " selected" : ""}>${yy}년</option>`).join("")
+         }</select>
+         <select id="calm" aria-label="달 고르기">${
+           mons.filter(x => x.slice(0, 4) === String(y)).sort()
+             .map(x => { const mm = +x.slice(5, 7);
+               return `<option value="${x}"${x === curMon ? " selected" : ""}>${mm}월</option>`; }).join("")
+         }</select>
+       </span>
        <button type="button" data-mv="1" ${mi < 0 || mi >= mons.length - 1 ? "disabled" : ""} aria-label="다음 달">▶</button></div>
      <div class="cal-g">${cells}</div>
      <div class="cal-note">진하게 표시된 날이 실거래가 공개된 날입니다. 눌러서 보세요.<br>
@@ -1129,7 +1143,17 @@ document.getElementById("dall").addEventListener("click", e => {
 document.getElementById("dall").addEventListener("keydown", e => {
   const r = e.target.closest("tr[data-i]");
   if (r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openDeal(+r.dataset.i); }
-});document.getElementById("cal").addEventListener("click", e => {
+});document.getElementById("cal").addEventListener("change", e => {
+  const mons = [...new Set(DAYS.map(x => x.d.slice(0, 7)))].sort();
+  if (e.target.id === "caly") {                      /* 연도를 바꾸면 그 해 가장 늦은 달로 */
+    const yy = e.target.value;
+    const inY = mons.filter(x => x.slice(0, 4) === yy);
+    if (inY.length) { curMon = inY[inY.length - 1]; renderCal(); }
+  } else if (e.target.id === "calm") {
+    curMon = e.target.value; renderCal();
+  }
+});
+document.getElementById("cal").addEventListener("click", e => {
   const mv = e.target.closest("button[data-mv]");
   if (mv) {
     const mons = [...new Set(DAYS.map(x => x.d.slice(0, 7)))].sort();
