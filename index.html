@@ -1067,7 +1067,9 @@ function renderCal() {
        실거래 신고는 평일에만 접수되기 때문입니다. ${FIRSTDAY} 부터 모으고 있어 그 전 날짜는 아직 모으기 전입니다.
        날짜에 마우스를 올리면 이유가 보입니다.<br>
        <b>점선 테두리</b>인 날은 <b>계약일 기준</b>입니다 — 그날 계약된 거래를 모은 것이라, 신고는 그 뒤에 들어왔습니다.
-       실선인 날은 공개일 기준(그날 신고돼 올라온 거래)입니다.</span></div>`;
+       실선인 날은 공개일 기준(그날 신고돼 올라온 거래)입니다.<br>
+       <b>전세 자료는 2020년부터</b> 있습니다. 그 전에도 전세 거래는 있었지만 전월세 신고 의무가 없어
+       기록이 남지 않았습니다. 매매와 분양권은 2006년 10월부터 다 있습니다.</span></div>`;
 }
 function renderDaily() {
   renderCal();
@@ -1081,7 +1083,11 @@ function renderDaily() {
       .catch(() => { if (curDay === want) sum.textContent = `${want} 자료를 불러오지 못했습니다. 잠시 뒤 다시 눌러 주세요.`; });
     return;
   }
-  sum.textContent = `${x.d} 공개 · 아파트 매매 ${x.n.apt}건 · 분양권 ${x.n.bun}건 · 전세 ${x.n.rent}건`;
+  /* 2020년 이전은 전월세 신고 의무가 없어 기록 자체가 없다 (2026-10-20 대표님 — 손님이 0건을 보고 의아해한다) */
+  const noRent = x.d < "2020.01.01" && !x.n.rent;
+  sum.innerHTML = `${x.d} ${x.kind === "계약일" ? "계약" : "공개"} · 아파트 매매 ${x.n.apt}건 · 분양권 ${x.n.bun}건`
+    + (noRent ? ` · <span class="dim">전세는 2020년부터 기록이 있습니다</span>`
+              : ` · 전세 ${x.n.rent}건`);
   const sale = r => {
     const hi = r.r >= 100 ? '<span class="new">신고가</span>' : "";
     return `<tr${r.i >= 0 ? ` data-i="${r.i}" tabindex="0"` : ""}><td class="rk">${r.k}</td>
