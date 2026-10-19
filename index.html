@@ -305,8 +305,10 @@ dialog.zdlg::backdrop{background:rgba(10,20,18,.55)}
 .cal-g .c .dn{display:block;font-weight:700}
 .cal-g .c small{display:block;font-size:10px;color:var(--ink-2);line-height:1.2}
 .cal-g .c.noday small{font-size:9px;color:var(--ink-2);opacity:.75}
-/* 계약일 기준으로 채운 옛 날짜 — 점선으로 구분한다 (2026-10-20) */
-.cal-g button.c.bycon{border-style:dashed;background:var(--surface)}
+/* 계약일 기준으로 채운 옛 날짜 — 점선으로 구분한다 (2026-10-20)
+   ★ 고른 날(.on)은 건드리지 않는다. 바탕만 흰색으로 덮으면 흰 글씨가 안 보인다 (2026-10-20 대표님) */
+.cal-g button.c.bycon{border-style:dashed}
+.cal-g button.c.bycon:not(.on){background:var(--surface)}
 .cal-note{font-size:12px;color:var(--ink-2);margin-top:8px}
 .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
 @media (max-width:900px){.dgrid{grid-template-columns:1fr}}
