@@ -1,6 +1,25 @@
 /* 단지 쪽 — 거래 순위 · 매매 실거래 추이 그래프 · 면적별로 골라 보기 (2026-10-14 대표님 — 더원 단지 쪽을 보시고 「이렇게 자세하게 나온다」)
    쪽에는 window.DJ = {k: 단지키, s: [[계약일 YYYYMMDD, 전용㎡, 금액 만원, 층, 평], …]} (최근 매매 · 해제 제외 · 최근 것부터) 만 들어 있다.
    순위는 날마다 바뀌므로 쪽에 박지 않고 r.json 한 파일에서 읽는다 — 2,000쪽을 날마다 다시 만들지 않으려고. */
+/* 매매 · 전세 · 월세 폴더 — 탭을 누르면 그 칸만 보인다 (2026-10-24 대표님
+   「단지 서랍처럼 매매 전세 월세 따로 폴더 만들어서 · 홈페이지도 똑같이」)
+   ★ 매매 자료가 없는 쪽에서도 돌아야 해서 아래 그래프와 따로 둔다 */
+(function () {
+  var bar = document.getElementById("dtabs");
+  if (!bar) return;
+  var secs = [].slice.call(document.querySelectorAll("[data-tsec]"));
+  if (!secs.length) return;
+  function show(t) {
+    secs.forEach(function (x) { x.style.display = x.getAttribute("data-tsec") === t ? "" : "none"; });
+    [].forEach.call(bar.children, function (b) { b.setAttribute("aria-selected", b.getAttribute("data-t") === t ? "true" : "false"); });
+  }
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-t]");
+    if (b) show(b.getAttribute("data-t"));
+  });
+  var first = bar.querySelector("button[data-t]");
+  if (first) show(first.getAttribute("data-t"));
+})();
 (function () {
   var D = window.DJ; if (!D || !D.s || !D.s.length) return;
   var won = function (m) { var e = Math.floor(m / 10000), r = m % 10000; return (e ? e + "억" : "") + (r ? " " + r.toLocaleString() + "만원" : (e ? "원" : "0원")); };
@@ -49,6 +68,7 @@
   function table() {
     var box = document.getElementById("dj-table"); if (!box) return;
     var rows = D.s.filter(function (r) { return !cur || r[4] === cur; }), n = box.dataset.n ? +box.dataset.n : 30;
+    /* 어느 평형을 보고 있는지 표 바로 위에 적는다 — 단추를 눌러도 바뀐 줄 모르셨다 (2026-10-24 대표님) */
     box.innerHTML = (cur ? '<p class="djnow">' + cur + '평 거래만 보고 있습니다 <span>· ' + rows.length
         + '건 · 위 「전체」를 누르면 모든 평형이 보입니다</span></p>' : "")
       + '<div class="atbl"><table><thead><tr><th>계약일</th><th class="r">평형</th><th class="r">층</th><th class="r">거래 금액</th></tr></thead><tbody>'
@@ -58,6 +78,7 @@
   }
   var chips = document.getElementById("dj-chips");
   if (chips) {
+    /* 이름표를 앞에 — 그냥 「전체 16평 23평 …」만 있으니 무슨 단추인지 모르고 지나치셨다 (2026-10-24 대표님) */
     chips.innerHTML = '<span class="djlab">평수별로 보기</span>'
       + [0].concat(pys).map(function (p) { return '<button type="button" data-p="' + p + '" aria-pressed="' + (p === 0) + '">' + (p ? p + "평" : "전체") + '</button>'; }).join("");
     chips.addEventListener("click", function (e) {
