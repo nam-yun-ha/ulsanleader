@@ -5,20 +5,31 @@
    「단지 서랍처럼 매매 전세 월세 따로 폴더 만들어서 · 홈페이지도 똑같이」)
    ★ 매매 자료가 없는 쪽에서도 돌아야 해서 아래 그래프와 따로 둔다 */
 (function () {
-  var bar = document.getElementById("dtabs");
-  if (!bar) return;
-  var secs = [].slice.call(document.querySelectorAll("[data-tsec]"));
-  if (!secs.length) return;
-  function show(t) {
-    secs.forEach(function (x) { x.style.display = x.getAttribute("data-tsec") === t ? "" : "none"; });
-    [].forEach.call(bar.children, function (b) { b.setAttribute("aria-selected", b.getAttribute("data-t") === t ? "true" : "false"); });
+  function init() {
+    var bar = document.getElementById("dtabs");
+    if (!bar) return;
+    var secs = [].slice.call(document.querySelectorAll("[data-tsec]"));
+    if (!secs.length) return;
+    var rk = document.getElementById("dj-rank"), rkn = document.getElementById("dj-rank-note");
+    function show(t) {
+      secs.forEach(function (x) { x.style.display = x.getAttribute("data-tsec") === t ? "" : "none"; });
+      [].forEach.call(bar.children, function (b) { b.setAttribute("aria-selected", b.getAttribute("data-t") === t ? "true" : "false"); });
+      /* 거래량 순위는 매매 이야기다 — 다른 폴더에서는 감춘다 */
+      if (rk) rk.style.display = t === "sale" ? "" : "none";
+      if (rkn) rkn.style.display = t === "sale" ? "" : "none";
+    }
+    bar.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-t]");
+      if (b) show(b.getAttribute("data-t"));
+    });
+    var first = bar.querySelector("button[data-t]");
+    if (first) show(first.getAttribute("data-t"));
   }
-  bar.addEventListener("click", function (e) {
-    var b = e.target.closest("button[data-t]");
-    if (b) show(b.getAttribute("data-t"));
-  });
-  var first = bar.querySelector("button[data-t]");
-  if (first) show(first.getAttribute("data-t"));
+  /* ★ c.js 는 매매 칸 한가운데에서 불린다 — 그때 문서에는 전세 · 월세 · 분양권 칸이 아직 없다.
+     그래서 `querySelectorAll` 이 매매 칸 하나만 잡았고, 전세를 눌러도 나머지가 그대로 보였다
+     (2026-10-24 대표님 「전세 눌러도 분양권이 먼저 나와」). 다 그려진 뒤에 찾는다 */
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();
 (function () {
   var D = window.DJ; if (!D || !D.s || !D.s.length) return;
