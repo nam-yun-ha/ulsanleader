@@ -49,17 +49,21 @@
   function table() {
     var box = document.getElementById("dj-table"); if (!box) return;
     var rows = D.s.filter(function (r) { return !cur || r[4] === cur; }), n = box.dataset.n ? +box.dataset.n : 30;
-    box.innerHTML = '<div class="atbl"><table><thead><tr><th>계약일</th><th class="r">평형</th><th class="r">층</th><th class="r">거래 금액</th></tr></thead><tbody>'
+    box.innerHTML = (cur ? '<p class="djnow">' + cur + '평 거래만 보고 있습니다 <span>· ' + rows.length
+        + '건 · 위 「전체」를 누르면 모든 평형이 보입니다</span></p>' : "")
+      + '<div class="atbl"><table><thead><tr><th>계약일</th><th class="r">평형</th><th class="r">층</th><th class="r">거래 금액</th></tr></thead><tbody>'
       + rows.slice(0, n).map(function (r) { return '<tr><td>' + ymd(r[0]) + '</td><td class="r">' + r[4] + '평 <small>' + r[1] + '㎡</small></td><td class="r">' + r[3] + '층</td><td class="r"><b>' + won(r[2]) + '</b></td></tr>'; }).join("")
       + '</tbody></table></div>' + (rows.length > n ? '<p style="text-align:center;margin:10px 0 0"><button type="button" class="dj-more">더 보기 (' + (rows.length - n) + '건 남음)</button></p>' : "");
     var m = box.querySelector(".dj-more"); if (m) m.addEventListener("click", function () { box.dataset.n = n + 50; table(); });
   }
   var chips = document.getElementById("dj-chips");
   if (chips) {
-    chips.innerHTML = [0].concat(pys).map(function (p) { return '<button type="button" data-p="' + p + '" aria-pressed="' + (p === 0) + '">' + (p ? p + "평" : "전체") + '</button>'; }).join("");
+    chips.innerHTML = '<span class="djlab">평수별로 보기</span>'
+      + [0].concat(pys).map(function (p) { return '<button type="button" data-p="' + p + '" aria-pressed="' + (p === 0) + '">' + (p ? p + "평" : "전체") + '</button>'; }).join("");
     chips.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
-      cur = +b.dataset.p; [].forEach.call(chips.children, function (x) { x.setAttribute("aria-pressed", x === b); });
+      cur = +b.dataset.p;
+      [].forEach.call(chips.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b); });
       var tb = document.getElementById("dj-table"); if (tb) delete tb.dataset.n;
       chart(); table();
     });
