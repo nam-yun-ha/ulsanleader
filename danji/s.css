@@ -123,6 +123,12 @@ h2{font-size:19px;margin:28px 0 8px}
 .dtabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
 .dtabs button:hover{color:var(--accent)}
 .dtabs button small{font-weight:500;font-size:13px;opacity:.75;margin-left:5px}
+/* 전세 · 월세 · 분양권도 옛 거래까지 — 20건만 보이고 「더 보기」로 늘린다 (2026-10-24 대표님) */
+tr.hid{display:none}
+.moreline{text-align:center;margin:10px 0 0}
+.moreline button{font:inherit;font-size:14px;font-weight:700;padding:8px 18px;border:1px solid var(--line);
+  border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+.moreline button:hover{border-color:var(--accent);color:var(--accent)}
 @media (max-width:520px){.dtabs button{padding:9px 12px;font-size:14.5px}}
 .djchips .djlab{align-self:center;font-size:13.5px;font-weight:700;color:var(--ink-2);margin-right:4px;white-space:nowrap}
 .djnow{margin:0 0 9px;padding:8px 11px;background:var(--accent-soft,#E6F1EE);border-left:4px solid var(--accent);border-radius:7px;font-size:14.5px;font-weight:700;color:var(--accent)}

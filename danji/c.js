@@ -24,6 +24,16 @@
     });
     var first = bar.querySelector("button[data-t]");
     if (first) show(first.getAttribute("data-t"));
+    /* 「더 보기」 — 숨겨 둔 줄을 50개씩 (2026-10-24 대표님 「그 앞에 것도 같이 나오게 밑으로 쭉」) */
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest(".tmore");
+      if (!b) return;
+      var box = b.closest(".sec"), hid = box ? [].slice.call(box.querySelectorAll("tr.hid")) : [];
+      hid.slice(0, 50).forEach(function (x) { x.classList.remove("hid"); });
+      var left = hid.length - 50;
+      if (left > 0) b.innerHTML = "더 보기 <small>(" + left.toLocaleString("ko-KR") + "건 남음)</small>";
+      else if (b.parentNode) b.parentNode.style.display = "none";   /* 다 보여 줬으면 단추를 감춘다 */
+    });
   }
   /* ★ c.js 는 매매 칸 한가운데에서 불린다 — 그때 문서에는 전세 · 월세 · 분양권 칸이 아직 없다.
      그래서 `querySelectorAll` 이 매매 칸 하나만 잡았고, 전세를 눌러도 나머지가 그대로 보였다
