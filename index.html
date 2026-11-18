@@ -59,8 +59,12 @@ nav.menu{display:flex;gap:18px;margin-left:auto;font-weight:500}
 nav.menu a{text-decoration:none;color:var(--ink-2)}
 nav.menu a.find{color:var(--accent);font-weight:700}
 /* 대출금리는 빨갛게 — 다른 데 잘 없는 칸이라 눈에 띄게 (2026-11-18 대표님 「빨갛게 하는 건 어때?」) */
-nav.menu a#nav-loan{color:#C0392B;font-weight:700}
-nav.menu a#nav-loan:hover{color:#8E2A1E}
+nav.menu a#nav-loan,
+nav.menu a#nav-lh,
+nav.menu a#nav-trade{color:#C0392B;font-weight:700}
+nav.menu a#nav-loan:hover,
+nav.menu a#nav-lh:hover,
+nav.menu a#nav-trade:hover{color:#8E2A1E}
 /* LH 임대 · 분양 공고 (2026-11-18 대표님 「홈페이지 저절로 뜨게」) */
 #lh .lhlist{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
 #lh .lhrow{border:1.5px solid var(--line);border-left:5px solid #0E4A49;border-radius:12px;padding:12px 15px;background:var(--surface)}
@@ -96,7 +100,9 @@ nav.menu a#nav-loan:hover{color:#8E2A1E}
   :root:not([data-theme="light"]) .hd-loan .hd-loan-t,
   :root:not([data-theme="light"]) .hd-loan .ln b,
   :root:not([data-theme="light"]) .hd-loan .go{color:#f2a399}
-  :root:not([data-theme="light"]) nav.menu a#nav-loan{color:#f2857a}}
+  :root:not([data-theme="light"]) nav.menu a#nav-loan,
+  :root:not([data-theme="light"]) nav.menu a#nav-lh,
+  :root:not([data-theme="light"]) nav.menu a#nav-trade{color:#f2857a}}
 @media (max-width:620px){.hd-loan{gap:8px 14px;padding:11px 13px}
   .hd-loan .ln b{font-size:17px}.hd-loan .go{margin-left:0;flex-basis:100%}}
 nav.menu a:hover{color:var(--accent)}
@@ -560,7 +566,7 @@ tr.stop td{color:var(--ink-2)}
       <a href="#case" id="nav-case" hidden>판례</a>
       <a href="#info" id="nav-info" hidden>부동산정보</a>
       <a href="#news">소식</a>
-      <a href="#trade">실거래</a>
+      <a href="#trade" id="nav-trade">실거래</a>
       <a href="#contact">문의</a>
     </nav>
     <div class="social" aria-label="채널">
