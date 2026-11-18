@@ -58,6 +58,26 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
 nav.menu{display:flex;gap:18px;margin-left:auto;font-weight:500}
 nav.menu a{text-decoration:none;color:var(--ink-2)}
 nav.menu a.find{color:var(--accent);font-weight:700}
+/* 대출금리는 빨갛게 — 다른 데 잘 없는 칸이라 눈에 띄게 (2026-11-18 대표님 「빨갛게 하는 건 어때?」) */
+nav.menu a#nav-loan{color:#C0392B;font-weight:700}
+nav.menu a#nav-loan:hover{color:#8E2A1E}
+/* 첫 화면 대출금리 한 줄 */
+.hd-loan{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;text-decoration:none;
+  border:2px solid #C0392B;border-radius:14px;padding:12px 16px;margin:14px 0 0;background:#fff7f6}
+.hd-loan .hd-loan-t{font-weight:800;color:#C0392B;font-size:15px}
+.hd-loan .hd-loan-t small{font-weight:600;color:var(--ink-2);font-size:12px;margin-left:4px}
+.hd-loan .ln{display:inline-flex;align-items:baseline;gap:6px;color:var(--ink)}
+.hd-loan .ln em{font-style:normal;font-size:13px;color:var(--ink-2)}
+.hd-loan .ln b{font-size:19px;font-weight:800;color:#C0392B;font-variant-numeric:tabular-nums}
+.hd-loan .ln i{font-style:normal;font-size:13px;color:var(--ink-2)}
+.hd-loan .go{margin-left:auto;font-size:13px;font-weight:700;color:#C0392B;white-space:nowrap}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hd-loan{background:#2a1512;border-color:#e0786c}
+  :root:not([data-theme="light"]) .hd-loan .hd-loan-t,
+  :root:not([data-theme="light"]) .hd-loan .ln b,
+  :root:not([data-theme="light"]) .hd-loan .go{color:#f2a399}
+  :root:not([data-theme="light"]) nav.menu a#nav-loan{color:#f2857a}}
+@media (max-width:620px){.hd-loan{gap:8px 14px;padding:11px 13px}
+  .hd-loan .ln b{font-size:17px}.hd-loan .go{margin-left:0;flex-basis:100%}}
 nav.menu a:hover{color:var(--accent)}
 .call{margin-left:8px;text-decoration:none;background:var(--accent);color:#fff;font-weight:700;padding:8px 14px;border-radius:6px;white-space:nowrap}
 .social{display:flex;gap:6px;margin-left:8px}
@@ -561,6 +581,7 @@ tr.stop td{color:var(--ink-2)}
 <div class="hd-find"><div><h2>울산 아파트 단지 찾기</h2><p>단지 이름이나 동 이름을 넣으면 평형별 실거래가 · 그래프 · 전세를 볼 수 있습니다.</p></div>
 <div><form class="hd-s" action="danji/" method="get" role="search"><input name="q" type="search" placeholder="예: 문수로, 신정동, 푸르지오" aria-label="단지명 · 동네"><button type="submit">검색</button></form>
 <p class="hd-gu"><a href="danji/?g=남구">남구 아파트</a><a href="danji/?g=중구">중구 아파트</a><a href="danji/?g=북구">북구 아파트</a><a href="danji/?g=동구">동구 아파트</a><a href="danji/?g=울주군">울주군 아파트</a></p><p class="hd-hot"><a href="danji/c97768f09b.html">대현더샵 <small>남구</small></a><a href="danji/8ec1c8173c.html">e편한세상강변 <small>중구</small></a><a href="danji/dc2838b561.html">월드메르디앙월드시티 <small>북구</small></a><a href="danji/358ad85661.html">힐스테이트 이스턴베이 <small>동구</small></a><a href="danji/54895f41f4.html">문수산 더샵 <small>울주군</small></a><a href="danji/fa8e9331ff.html">울산신정푸르지오 <small>남구</small></a></p></div></div>
+<a class="hd-loan" href="#loan"><span class="hd-loan-t">은행별 대출 금리 <small>2026.10 공시 기준</small></span><span class="ln"><em>주택담보대출</em><b>4.38%</b><i>신한은행</i></span><span class="ln"><em>전세자금대출</em><b>4.00%</b><i>우리은행</i></span><span class="go">전체 은행 보기 →</span></a>
 <div class="hd-q"><h3>최근 들어온 질문 <small>검색으로 찾아오신 분들이 물은 것</small></h3><div class="hd-qs"><a href="info/68.html"><b>Q. 울산 재건축 통합심의는 어떤 순서로 하나요?</b><span>울산 재건축 통합심의 절차 순서｜무엇을 한 번에 보고 누가 하나</span><i>2026.11.18 답변 · 답 보기 →</i></a><a href="info/66.html"><b>Q. 울산에서 분양권 사려는데 뭘 확인해야 하나요?</b><span>울산 분양권 매수, 계약 전에 확인할 것</span><i>2026.11.18 답변 · 답 보기 →</i></a><a href="info/67.html"><b>Q. 울산 남구 B-04 권리가액은 얼마인가요?</b><span>울산 남구 B-04 재개발 권리가액｜언제 나오고 지금은 무엇을 보나</span><i>2026.11.18 답변 · 답 보기 →</i></a><a href="study/37.html"><b>Q. 재개발 1+1로 받은 작은 집은 팔 수 있나요?</b><span>1+1 분양 — 큰 집 하나 대신 두 채</span><i>2026.11.18 답변 · 답 보기 →</i></a><a href="study/05.html"><b>Q. 정비구역이 바뀌면 분담금 추산액도 다시 받나요?</b><span>사업시행인가 — 무엇을 얼마나 짓는지 정해진다</span><i>2026.11.18 답변 · 답 보기 →</i></a><a href="study-cy/04.html"><b>Q. 부산 · 경남에 살아도 울산 아파트 청약할 수 있나요?</b><span>해당지역과 기타지역 — 울산에 얼마나 살아야 하나</span><i>2026.10.15 답변 · 답 보기 →</i></a></div></div>
 <div class="hd-two"><div class="hd-box"><h3>울산 최근 실거래 <a href="#trade">전체 보기 →</a></h3><a href="danji/4c861789c7.html" class="hd-row"><span><b>대명루첸</b><small>남구 신정동 · 83㎡ · 29층</small></span><span class="r"><b class="won">8억 5,250만원</b><small>2026.11.15 계약</small></span></a><a href="danji/347ef7aa68.html" class="hd-row"><span><b>힐스테이트수암(1단지)</b><small>남구 야음동 · 85㎡ · 2층</small></span><span class="r"><b class="won">7억 5,000만원</b><small>2026.11.15 계약</small></span></a><a href="danji/fa8e9331ff.html" class="hd-row"><span><b>울산신정푸르지오</b><small>남구 신정동 · 100㎡ · 2층</small></span><span class="r"><b class="won">6억 6,800만원</b><small>2026.11.11 계약</small></span></a><a href="danji/7a4d6feb7a.html" class="hd-row"><span><b>지웰푸르지오</b><small>북구 화봉동 · 85㎡ · 15층</small></span><span class="r"><b class="won">5억 9,950만원</b><small>2026.11.16 계약</small></span></a><a href="danji/4c5f0801b0.html" class="hd-row"><span><b>에일린의뜰3차</b><small>중구 유곡동 · 100㎡ · 17층</small></span><span class="r"><b class="won">5억 9,500만원</b><small>2026.11.16 계약</small></span></a><a href="danji/5e507521b2.html" class="hd-row"><span><b>남외푸르지오1차</b><small>중구 남외동 · 108㎡ · 14층</small></span><span class="r"><b class="won">5억 8,500만원</b><small>2026.11.16 계약</small></span></a><p class="src">가장 최근에 공개된 아파트 매매 신고 가운데 금액이 큰 순 · 국토교통부 실거래가</p></div>
 <div class="hd-box"><h3>울산 분양 · 청약 <a href="apt/">전체 보기 →</a></h3><a class="hd-row" href="apt/2026000558.html"><span><b>화정1지구 아르엘</b><small>동구 화정동 · 802세대 · 입주 2029.11</small></span><span class="r"><em class="hd-bd">청약 예정</em></span></a><a class="hd-row" href="apt/2026910266.html"><span><b>문수로 비스타 더파크</b><small>남구 무거동 · 329세대 · 입주 2029.05</small></span><span class="r"><em class="hd-bd">접수 마감</em></span></a><a class="hd-row" href="apt/2026910252.html"><span><b>그랑라크 에일린의 뜰</b><small>남구 야음동 · 18세대 · 입주 2029.11</small></span><span class="r"><em class="hd-bd">접수 마감</em></span></a><a class="hd-row" href="apt/2026000436.html"><span><b>더샵 시에르네(조합원취소분)(2회차)</b><small>중구 학성동 · 29세대 · 입주 2027.05</small></span><span class="r"><em class="hd-bd">접수 마감</em></span></a><a class="hd-row" href="apt/2026930032.html"><span><b>태화강 에피트</b><small>울주군 범서읍 · 1세대 · 입주 2027.07</small></span><span class="r"><em class="hd-bd">접수 마감</em></span></a><a class="hd-row" href="apt/2026000441.html"><span><b>문수로 비스타 더파크</b><small>남구 무거동 · 700세대 · 입주 2029.05</small></span><span class="r"><em class="hd-bd">접수 마감</em></span></a><p class="src">청약홈 입주자모집공고 기준</p></div></div>
